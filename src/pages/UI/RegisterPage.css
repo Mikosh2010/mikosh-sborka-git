@@ -1,0 +1,282 @@
+input:-internal-autofill-selected {
+    background-color: transparent !important;
+    background-image: none !important;
+    color: inherit !important;
+    appearance: none;
+}
+
+
+.register {
+    padding: 100px 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.register__main-title {
+    font-size: 36px;
+    color: #D48EFF;
+    margin-bottom: 50px;
+}
+
+.register__content {
+    display: flex;
+    border: 3px solid #583B5F;
+}
+
+.register__img {
+    width: 610px;
+    height: 600px;
+}
+
+.register__back {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #fff;
+    transition: .2s ease-in-out;
+    margin-left: -18px;
+}
+
+.register__back:hover i {
+    margin-left: -5px;
+    margin-right: 5px;
+}
+
+.register__back i {
+    font-size: 26px;
+    transition: .2s ease-in-out;
+}
+
+.register__box {
+    height: 600px;
+    background: rgba(88, 59, 95, .3);
+    padding: 0px 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__title {
+    font-size: 24px;
+}
+
+.register__subtitle {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.input__box {
+    background: none;
+    position: relative;
+    width: 380px;
+    margin-top: 35px;
+}
+
+.input__box input {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 20px 15px 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #23242a;
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    transition: .5s;
+}
+
+.pass__input-box input {
+    font-size: 20px;
+    padding: 20px 15px 8px;
+}
+
+.pass__input-box .input__text {
+    padding: 20px 0;
+}
+
+
+.input__text {
+    font-size: 16px;
+    pointer-events: none;
+    color: #fff;
+    padding: 18px 0;
+    position: absolute;
+    left: 0;
+    z-index: 10;
+    transition: .5s;
+}
+
+.input__box input:valid ~ .input__text,
+.input__box input:focus ~ .input__text {
+    font-size: 14px;
+    transform: translateY(-34px);
+}
+
+.pass__show {
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    z-index: 100;
+    color: #fff;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.pass-input__box input:valid ~ .pass__show,
+.pass-input__box input:focus ~ .pass__show {
+    color: #000;
+}
+
+.pass-repeat__input-box input:valid ~ .pass__show,
+.pass-repeat__input-box input:focus ~ .pass__show {
+    color: #000;
+}
+
+.bottom-border {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: .5s;
+    pointer-events: none;
+}
+
+.input__box input:valid ~ .bottom-border,
+.input__box input:focus ~ .bottom-border {
+    height: 40px;
+}
+
+.register__button {
+    width: 380px;
+    margin-top: 30px;
+    padding: 13px 0;
+    background: #583B5F;
+    border-radius: 7px;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition-duration: .25s;
+}
+
+.register__button:hover {
+    background: #bba9cb;
+    color: #141414;
+}
+
+.register__to-login {
+    margin-top: 50px;
+    font-size: 15px;
+}
+
+.register__to-login a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1130px) {
+    .register {
+        padding: 50px 0;
+    }
+    .register__img {
+        display: none;
+    }
+    .register__box {
+        width: 90vw;
+    }
+    .register__inputs, .register__links, .register__button {
+        width: 100%;
+    }
+    .input__box {
+        width: auto !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .register {
+        padding: 0;
+    }
+    .register__back {
+        display: flex;
+    }
+    .register__main-title {
+        display: none;
+    }
+    .register__content {
+        transform: scale(1);
+        border: 0;
+        padding-bottom: 3.5rem;
+    }
+    .register__box {
+        width: 100vw;
+        height: 100vh;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+        padding: 0 30px;
+    }
+    .register__inputs {
+        width: 100%;
+    }
+    .input__box {
+        margin-bottom: 30px;
+    }
+    .register__head {
+        align-items: flex-start;
+        margin-top: 25px;
+    }
+    .register__links {
+        width: 100%;
+    }
+    .register__button {
+        margin: 35px auto;
+        width: 100%;
+    }
+    .register__to-login {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 355px) {
+    .register__to-login {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .register__to-login a {
+        text-decoration: none;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .register__links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

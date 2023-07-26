@@ -1,0 +1,84 @@
+.edge__content {
+    margin: 70px 0 100px;
+    width: 380px;
+}
+
+.edge__text {
+    color: #fff;
+    list-style: none;
+    font-size: 18px;
+}
+
+.edge__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.edge__item span {
+    color: #D48EFF;
+    font-weight: 700;
+    font-family: "GothamPro", sans-serif;
+}
+
+.edge__arrow {
+    font-size: 24px;
+    color: #626262;
+    transition: .3s ease-in-out;
+}
+
+.arrow-active {
+    transform: rotate(-180deg);
+}
+
+.edge__desc {
+    max-height: 0;
+    overflow: hidden;
+    font-size: 13px;
+    margin-bottom: 15px;
+    transition: .5s linear;
+}
+
+
+@media screen and (max-width: 550px) {
+    /* Edge */
+    .edge__content {
+        padding: 0 20px;
+    }
+    .edge__text {
+        font-size: 14px;
+    }
+    .edge__header {
+        margin-bottom: 0;
+    }
+    .edge__desc {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    /* Edge */
+    .edge__content {
+        padding: 0 50px;
+    }
+
+    .edge__text {
+        font-size: 13px;
+    }
+}
+
+
+@media screen and (max-width: 285px) {
+    .edge__content {
+        padding: 0 70px;
+    }
+    .edge__text {
+        font-size: 12px;
+    }
+    .edge__desc {
+        font-size: 11px;
+        margin-top: 5px;
+    }
+}

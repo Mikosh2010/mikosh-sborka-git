@@ -1,0 +1,17 @@
+.content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+h1 {
+    font-size: 98px;
+}
+
+.link {
+    color: #fff;
+    text-decoration: underline;
+    margin-top: 35px;
+}

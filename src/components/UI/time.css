@@ -1,0 +1,22 @@
+.timeDate {
+    position: fixed;
+    left: 15px;
+    bottom: 15px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time, .date {
+    background-color: #3f2f42;
+    padding: 5px 7px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, .1);
+}
+
+@media screen and (max-width: 1000px) {
+    .timeDate {
+        bottom: 80px;
+    }
+}

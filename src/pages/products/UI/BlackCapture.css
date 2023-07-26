@@ -1,0 +1,15 @@
+.modal__desc {
+    margin-top: 30px;
+    max-height: 400px;
+    line-height: 2;
+    font-size: 14px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 0%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 0%, transparent 100%);
+}
+
+.showed {
+    max-height: 100%;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 100%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 100%, transparent 100%);
+}
