@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './UI/LoginPage.css';
-import { loginService } from '../service/loginService';
 
 const LoginPage = () => {
 
     const [attr, setAttr] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    // todo: learn what is state and props and use 
-    // hooks 
-    //useState
 
     const loginChange = (e) => {
         setLogin(e.target.value)
@@ -21,9 +17,6 @@ const LoginPage = () => {
 
     const handleClick = (event) => {
         event.preventDefault();
-        const auth = {login, password};
-        return loginService({ auth });
-        // Your logic here
     };
     return (
         <div>

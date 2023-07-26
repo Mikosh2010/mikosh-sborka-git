@@ -64,19 +64,19 @@ function Header() {
                     <Link to="/" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-estate nav__icon"></i><div className="nav__link">Главная</div>
                     </Link>
-                    <a href="#about" className="nav__item" onClick={() => setNavActive(!navActive)}>
+                    <a href="/#about" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-user nav__icon"></i><div className="nav__link">О нас</div>
                     </a>
-                    <a href="#mods" className="nav__item" onClick={() => setNavActive(!navActive)}>
+                    <a href="/#mods" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-file-alt nav__icon"></i><div className="nav__link">Сборки</div>
                     </a>
-                    <a href="#edge" className="nav__item" onClick={() => setNavActive(!navActive)}>
+                    <a href="/#edge" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-scenery nav__icon"></i><div className="nav__link">Качества</div>
                     </a>
-                    <a href="#questions" className="nav__item" onClick={() => setNavActive(!navActive)}>
+                    <a href="/#questions" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-question-circle nav__icon"></i><div className="nav__link">Вопросы</div>
                     </a>
-                    <a href="#contacts" className="nav__item" onClick={() => setNavActive(!navActive)}>
+                    <a href="/#contacts" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-message nav__icon"></i><div className="nav__link">Контакты</div>
                     </a>
                     <Link to="/" className="personal-area" style={{display: 'none'}}>

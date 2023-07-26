@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Header from './components/Header';
@@ -8,23 +8,22 @@ import { MainPage } from './pages/MainPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { NotFound } from './pages/NotFound';
-import { store } from './store/index'
-import Products from './pages/products/Products';
+import Products from './pages/Products';
 
 function App() {
 
   const products = [
     {
       id: 1,
-      name: '2121'
+      name: 'Black Capture'
     },
     {
       id: 2,
-      name: '2121'
+      name: 'Cyber Radmir'
     },
     {
       id: 3,
-      name: '2121'
+      name: 'Сборка на заказ'
     }
   ]
   
