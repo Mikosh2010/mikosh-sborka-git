@@ -1,47 +1,57 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import ScrollUp from "../components/ScrollUp";
 import Edge from "../components/Edge";
 import Questions from '../components/Questions';
 import Section from '../components/Section';
 import Footer from '../components/Footer';
 import ScrollReveal from 'scrollreveal';
+import Mods from '../components/Mods';
 
 
-const MainPage = () => {
+const MainPage = ({products}) => {
 
   useEffect(() => {
     const sr = ScrollReveal();
 
-    sr.reveal('.revealleft-item, .about__content, .edge__item, .footer__header .header__logo', {
-        duration: 1000,
+    sr.reveal('.revealleft-item, .questions__item, .about__content, .footer__header .header__logo', {
+        duration: 1500,
         distance: '30px',
         delay: 200,
         opacity: 0,
         origin: 'left',
-        interval: 300,
-        scale: 1,
-        easing: 'ease-in-out',
+        interval: 150,
     });
-    sr.reveal('.revealtop-item, .section__title, .section__subtitle, .section__desc, .questions__item', {
-        duration: 1000,
+    sr.reveal('.contacts__button, .section__title, .section__subtitle, .section__desc, .Mods_mods__item__6oWnW', {
+        duration: 1500,
         distance: '30px',
         delay: 200,
         opacity: 0,
         origin: 'top',
+        interval: 150,
+    });
+    sr.reveal('.Mods_mods__item__6oWnW', {
+        duration: 1500,
+        distance: '30px',
+        delay: 1000,
+        opacity: 0,
+        origin: 'top',
         interval: 300,
-        scale: 1,
-        easing: 'ease-in-out',
+    });
+    sr.reveal('.edge__item', {
+        duration: 1500,
+        distance: '30px',
+        delay: 200,
+        opacity: 0,
+        origin: 'bottom',
+        interval: 150,
     });
     sr.reveal('.intro__image, .about__image, .footer__header .nav__item', {
-        duration: 1000,
-        distance: '30px',
-        delay: 500,
+        duration: 2000,
+        distance: '40px',
+        delay: 1000,
         opacity: 0,
         origin: 'right',
         interval: 100,
-        scale: 1,
-        easing: 'ease-in-out',
     });
   }, []);
 
@@ -121,44 +131,7 @@ const MainPage = () => {
                             subtitle="Наши основные модификации"
                             desc="Здесь вы можете приобрести или узнать подробнее о сборке"
                         />
-                        <div className="mods__content">
-                            <div className="mods-item black-capture revealtop-item">
-                                <img
-                                    src="https://i.ibb.co/R7QCmX8/Black-Capture.jpg"
-                                    alt=""
-                                    className="mods-img"
-                                />
-                                <div className="mods__name">Black Capture</div>
-                                <div className="mods__price">Цена: 300 руб</div>
-                                <Link to="products/black-capture" className="mods__button">
-                                    Подробнее
-                                </Link>
-                            </div>
-                            <div className="mods-item cyber-radmir revealtop-item">
-                                <img
-                                    src="https://i.ibb.co/dJhv51J/Cyber-Radmir.jpg"
-                                    alt=""
-                                    className="mods-img"
-                                />
-                                <div className="mods__name">Cyber Radmir</div>
-                                <div className="mods__price">Цена: 300 руб</div>
-                                <Link to="products/cyber-radmir" className="mods__button">
-                                    Подробнее
-                                </Link>
-                            </div>
-                            <div className="mods-item sborka-na-zakaz revealtop-item">
-                                <img
-                                    src="https://i.ibb.co/RcQyvBn/image.jpg"
-                                    alt=""
-                                    className="mods-img"
-                                />
-                                <div className="mods__name">Сборка на заказ</div>
-                                <div className="mods__price">Цена: 600 руб</div>
-                                <Link to="products/sborka-na-zakaz" className="mods__button">
-                                    Подробнее
-                                </Link>
-                            </div>
-                        </div>
+                        <Mods products={products}/>
                     </div>
                 </section>
 
@@ -199,7 +172,7 @@ const MainPage = () => {
                             href="https://www.youtube.com/channel/UCqtFnLj9HAzFzcc8loTzVFw"
                             target="_blank"
                             rel="noreferrer"
-                            className="contacts__button revealleft-item"
+                            className="contacts__button"
                         >
                             YouTube
                         </a>
@@ -207,7 +180,7 @@ const MainPage = () => {
                             href="https://vk.com/mikoshsborka"
                             target="_blank"
                             rel="noreferrer"
-                            className="contacts__button revealleft-item"
+                            className="contacts__button"
                         >
                             ВКонтакте
                         </a>
@@ -215,7 +188,7 @@ const MainPage = () => {
                             href="https://t.me/mikoshsborka"
                             target="_blank"
                             rel="noreferrer"
-                            className="contacts__button revealleft-item"
+                            className="contacts__button"
                         >
                             Telegram
                         </a>

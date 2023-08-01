@@ -1,0 +1,121 @@
+.error {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, .6);
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: .2s ease-in-out;
+}
+
+.error.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.error__wrapper.active {
+    transform: scale(1);
+    opacity: 1;
+    transition: .2s ease-in-out;
+}
+
+.error__wrapper.active .error__icon {
+    top: -45px;
+    transition: .2s ease-in-out;
+}
+
+.error__wrapper {
+    width: 400px;
+    height: 300px;
+    background: #412f46;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+
+    opacity: 0;
+    transform: scale(.9);
+    transition: .2s ease-in-out;
+}
+
+.error__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.error__icon {
+    position: absolute;
+    top: -80px;
+    z-index: 100;
+    font-size: 80px;
+    color: #fff;
+    background: #604467;
+    border-radius: 50%;
+    padding: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 15px 0 #00000036;
+    transition: .2s ease-in-out;
+}
+
+.error__title {
+    margin: 25px 0;
+    font-size: 32px;
+}
+
+.error__subtitle {
+    font-size: 14px;
+    max-width: 350px;
+    margin-bottom: 30px;
+}
+
+
+.error__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: #583B5F;
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 40px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition-duration: .25s;
+}
+
+.error__button:hover {
+    background-color: #bba9cb;
+    color: #000000;
+}
+
+@media screen and (max-width: 450px) {
+    .error__wrapper.active {
+        transform: scale(.8);
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .error__subtitle {
+        padding: 0 20px;
+    }
+    .error__button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}

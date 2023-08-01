@@ -1,0 +1,129 @@
+.mods__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding-bottom: 100px;
+}
+
+.mods__item {
+    width: 270px;
+    height: 270px;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 50% !important;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 35px 0 #0000007e;
+    color: #fff;
+}
+
+.mods__info {
+    background: #583B5F;
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 15px 15px 0 0;
+    position: absolute;
+    top: -30%;
+    right: 0;
+    box-shadow: 0 0 25px 0 #000000a5;
+    transition: .2s ease-in-out;
+}
+
+.mods__item:hover .mods__info {
+    top: 0;
+}
+
+.mods__info:hover {
+    background-color: #bba9cb;
+    color: #000000;
+}
+
+.mods__itemContent {
+    width: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+}
+
+.mods__itemContent::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(10deg, rgba(0,0,0,1) -23%, rgba(255,255,255,0) 61%);
+}
+
+.mods__name {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.mods__price {
+    font-size: 16px;
+}
+
+.mods__img {
+    width: 300px;
+    border-radius: 10px;
+}
+
+.mods__slider {
+    display: flex;
+    align-items: center;
+    padding-bottom: 25px;
+}
+
+.mods__slider-title {
+    text-transform: uppercase;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.mods__arrow {
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    color: #fff;
+    margin-top: 1px;
+}
+
+@media screen and (max-width: 1100px) {
+    .mods__info {
+        top: 0;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .mods__content {
+        gap: 25px;
+    }
+    .mods__item {
+        width: 260px;
+        height: 260px;
+    }
+    .mods__itemContent {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .mods__button {
+        padding: 9px 13px;
+    }
+}

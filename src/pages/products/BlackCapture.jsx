@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './UI/styles.css';
 import './UI/BlackCapture.css';
 import activeStar from './img/rating-star.svg';

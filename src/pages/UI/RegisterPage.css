@@ -211,7 +211,7 @@ input:-internal-autofill-selected {
     .register__inputs, .register__links, .register__button {
         width: 100%;
     }
-    .input__box {
+    .register .input__box {
         width: auto !important;
     }
 }

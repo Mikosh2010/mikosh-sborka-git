@@ -8,22 +8,6 @@
     src: url(fonts/GothamPro-Bold.3cabf0ca.ttf) format("truetype");
 }
 
-@font-face {
-    font-family: "Gilroy";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-    src: url(fonts/Gilroy-Light.otf) format("opentype");
-}
-
-@font-face {
-    font-family: "Gilroy";
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-    src: url(fonts/Gilroy-ExtraBold.otf) format("opentype");
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -40,6 +24,7 @@ body {
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden !important;
 }
 
 input,
@@ -65,7 +50,7 @@ svg {
     height: auto;
 }
 
-.main {
+main {
     overflow: hidden;
 }
 
@@ -241,81 +226,6 @@ svg {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.mods__content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    padding-bottom: 100px;
-}
-
-.mods-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.sborka-na-zakaz .mods__name {
-    font-size: 17px;
-}
-
-.mods__name {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.mods__price {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.mods-img {
-    width: 170px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.mods__button {
-    background: #583B5F;
-    padding: 10px 15px;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #fff;
-    border: none;
-    outline: none;
-    border-radius: 7px;
-    font-size: 14px;
-    cursor: pointer;
-    transition-duration: .25s;
-}
-
-.mods__button:hover {
-    background-color: #bba9cb;
-    color: #000000;
-}
-
-.mods__slider {
-    display: flex;
-    align-items: center;
-    padding-bottom: 25px;
-}
-
-.mods__slider-title {
-    text-transform: uppercase;
-    margin: 0 10px;
-    font-size: 14px;
-}
-
-.mods__arrow {
-    font-size: 16px;
-    font-weight: 400;
-    cursor: pointer;
-    color: #fff;
-    margin-top: 1px;
 }
 
 /* Edge */
@@ -805,11 +715,14 @@ svg {
     }
 
     /* Intro */
+    .intro {
+        height: auto !important;
+    }
     .intro__wrapper {
         margin-top: 0;
     }
     .intro__title {
-        margin-top: 100px;
+        margin-top: 200px !important;
         font-size: 30px;
         text-align: center;
     }
