@@ -3,9 +3,9 @@ import { Header } from './components//Header';
 import { useSelector } from 'react-redux';
 
 const ProtectedRoute = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-  return isAuthenticated ? (
+  return isLoggedIn ? (
     <Header area={true}/>
   ) : (
     <Header area={false}/>

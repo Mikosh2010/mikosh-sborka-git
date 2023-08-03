@@ -1,10 +1,10 @@
-export const login = (token) => {
-
-
-  console.log(token)
+export const login = (username, password) => {
   return {
     type: 'LOGIN',
-    payload: token
+    payload: {
+      username,
+      password
+    }
   };
 };
 
