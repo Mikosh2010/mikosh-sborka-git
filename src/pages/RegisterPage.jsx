@@ -16,7 +16,7 @@ const RegisterPage = () => {
                     <img src="https://i.imgur.com/Acblvqw.png" alt="" className="register__img" />
                     <form className="register__box">
                         <Link to="/" className="register__back">
-                            <i class="uil uil-arrow-left"></i> НА ГЛАВНУЮ
+                            <i className="uil uil-arrow-left"></i> НА ГЛАВНУЮ
                         </Link>
                         <div className="register__head">
                             <h3 className="register__title">Создать аккаунт</h3>

@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../actions/authActions';
 import './UI/header.css';
 
-function Header() {
+function Header({profile, balance, username, login}) {
 
     // Active navLink
     useEffect(() => {
@@ -49,10 +51,12 @@ function Header() {
         return () => {
           window.removeEventListener('scroll', fixedHeader);
         };
-      }, []);
-    
-      const [fixed, setFixed] = React.useState(false);
-      const [navActive, setNavActive] = React.useState(false);
+    }, []);
+
+    const [fixed, setFixed] = React.useState(false);
+    const [navActive, setNavActive] = React.useState(false);
+
+    console.log(username);
 
     return (
         <header className={fixed ? "header fixed" : "header"} id="header">
@@ -79,15 +83,18 @@ function Header() {
                     <a href="/#contacts" className="nav__item" onClick={() => setNavActive(!navActive)}>
                         <i className="uil uil-message nav__icon"></i><div className="nav__link">Контакты</div>
                     </a>
-                    <Link to="/" className="personal-area" style={{display: 'none'}}>
-                        <i className="uil uil-user-circle nav__area-icon"></i><div className="nav__link">Личный кабинет</div>
-                    </Link>
-                    <NavLink to="/login" className="login__link">
-                        <div className="nav__link">Войти</div>
-                    </NavLink>
-                    <NavLink to="/register" className="register__link">
-                        <div className="nav__link">Регистрация</div>
-                    </NavLink>
+                    <div className={profile ? "nav__profile noAccount" : "nav__profile"}>
+                        <i className="uil uil-user-circle nav__area-icon"></i> {username}
+                        <i className="fa-solid fa-wallet"></i> {balance} ₽
+                    </div>
+                    <div className={profile ? "account" : "account noAccount"}>
+                        <NavLink to="/login" className="login__link">
+                            <div className="nav__link">Войти</div>
+                        </NavLink>
+                        <NavLink to="/register" className="register__link">
+                            <div className="nav__link">Регистрация</div>
+                        </NavLink>
+                    </div>
                 </ul>
                 <i className="uil uil-times nav__close" id="nav-close" onClick={() => setNavActive(!navActive)}></i>
             </nav>
@@ -100,4 +107,12 @@ function Header() {
     );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+    username: state.auth.username
+});
+
+const mapDispatchToProps = {
+    login
+};
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

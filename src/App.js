@@ -97,11 +97,12 @@ function App() {
         <link rel="manifest" href="./favicons/site.webmanifest" />
       </Helmet>
 
-      <Header />
+      <Header balance={500}/>
       <Routes>
         <Route path='/' element={<MainPage products={products}/>} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
+
 
 
 

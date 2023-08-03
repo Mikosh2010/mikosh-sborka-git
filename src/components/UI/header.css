@@ -81,6 +81,10 @@
     gap: 25px;
 }
 
+.noAccount {
+    display: none;
+}
+
 .personal-area {
     border-left: 1px solid #fff;
     padding-left: 15px;

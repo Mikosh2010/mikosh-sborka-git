@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login, logout } from '../actions/authActions';
 import './UI/LoginPage.css';
 
-const LoginForm = ({isLoggedIn, login, logout}) => {
+const LoginForm = ({isLoggedIn, login}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [attr, setAttr] = useState(false);
@@ -12,7 +12,6 @@ const LoginForm = ({isLoggedIn, login, logout}) => {
   const onSubmit = (e) => {
     e.preventDefault();
     login(username, password);
-    console.log(username, password);
   };
 
   console.log(isLoggedIn);
@@ -20,10 +19,7 @@ const LoginForm = ({isLoggedIn, login, logout}) => {
   return (
     <div>
       {isLoggedIn ? (
-        <div style={{marginTop: '100px'}}>
-          <div>Привет, {username}</div>
-          <button onClick={logout}>Выйти</button>
-        </div>
+        <Navigate replace to="/"/>
       ) : (
         <div className="login">
           <h1 className="login__main-title">АВТОРИЗАЦИЯ</h1>

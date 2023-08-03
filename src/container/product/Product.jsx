@@ -22,7 +22,7 @@ const Product = ({product}) => {
         <ShowDesc active={show} setActive={setShow} product={product}/>
         <ProductsError active={errorActive} setActive={setErrorActive}/>
 
-        <div className="modal__item">
+        <div className="modal__item" key={product.id}>
             <div className="modal__pictures">
                 <img src={displayImage} alt="" className="modal__display"/>
                 <div className="modal__images">

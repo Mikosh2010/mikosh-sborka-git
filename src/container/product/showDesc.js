@@ -9,12 +9,12 @@ const ShowDesc = ({product, active, setActive}) => {
                     <i className="ri-close-line descModal__close" onClick={() => setActive(false)}></i>
 
                     <h3 className="descModal__title">{product.name}</h3>
-                    <p className="descModal__desc">
-                        <div class="title">КАПТ сборка для Radmir RP. С ней вы будете выигрывать все капты.</div>
+                    <div className="descModal__desc">
+                        <div className="title">КАПТ сборка для Radmir RP. С ней вы будете выигрывать все капты.</div>
                         <br/>
-                        <div class="title">Скрипты которые находятся в сборке:</div>
+                        <div className="title">Скрипты которые находятся в сборке:</div>
                         <br/>
-                        <div class="title">CLEO:</div>
+                        <div className="title">CLEO:</div>
                         <br/>
                         CrosshairFix - Фиксация прицела (/cy | /cx)
                         <br/>
@@ -46,7 +46,7 @@ const ShowDesc = ({product, active, setActive}) => {
                         <br/>
                         NoAnimationMoney - отключает анимацию подсчёта денег при заходе в игру
                         <br/>
-                        <div class="title">ASI:</div>
+                        <div className="title">ASI:</div>
                         <br/>
                         colormod - Устанавливает малозанимающую графику которая не забирает FPS
                         <br/>
@@ -62,13 +62,13 @@ const ShowDesc = ({product, active, setActive}) => {
                         чувствительность.
                         <br/>
                         <br/>
-                        <div class="title">Прочие скрипты:</div>
+                        <div className="title">Прочие скрипты:</div>
                         <br/>
                         TimeCyc - Устанавливает красивое небо с облаками
                         <br/>
                         effects - Заменяет эффекты крови и выстрела
                         <br/>
-                    </p>
+                    </div>
                     <div className='indent'></div>
                 </div>
             </div>

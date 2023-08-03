@@ -3,12 +3,12 @@ import { Header } from './components//Header';
 import { useSelector } from 'react-redux';
 
 const ProtectedRoute = () => {
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return isLoggedIn ? (
-    <Header area={true}/>
+    <Header profile={true}/>
   ) : (
-    <Header area={false}/>
+    <Header profile={false}/>
   );
 };
 
