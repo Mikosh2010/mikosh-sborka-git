@@ -4,25 +4,30 @@ import { connect } from 'react-redux';
 import { login, logout } from '../actions/authActions';
 import './UI/LoginPage.css';
 
-const LoginForm = (props) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [attr, setAttr] = useState(false);
-  
-    const onSubmit = (e) => {
-      e.preventDefault();
-      props.login(username, password);
-      console.log(username, password);
-    };
-  
-    const isLoggedIn = props;
-    console.log(isLoggedIn);
-  
-    return isLoggedIn ? (
-        <div>
+const LoginForm = ({isLoggedIn, login, logout}) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [attr, setAttr] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    login(username, password);
+    console.log(username, password);
+  };
+
+  console.log(isLoggedIn);
+
+  return (
+    <div>
+      {isLoggedIn ? (
+        <div style={{marginTop: '100px'}}>
+          <div>Привет, {username}</div>
+          <button onClick={logout}>Выйти</button>
+        </div>
+      ) : (
         <div className="login">
           <h1 className="login__main-title">АВТОРИЗАЦИЯ</h1>
-  
+
           <div className="login__content">
             <img src="https://i.imgur.com/Acblvqw.png" alt="" className="login__img" />
             <form className="login__box" onSubmit={onSubmit}>
@@ -30,7 +35,7 @@ const LoginForm = (props) => {
                 <h3 className="login__title">Войти</h3>
                 <h3 className="login__subtitle">Вход в свой аккаунт</h3>
               </div>
-  
+
               <div className="login__inputs">
                 <div className="input__box login__input-box">
                   <input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -72,20 +77,19 @@ const LoginForm = (props) => {
             </form>
           </div>
         </div>
-      </div>
-    ) : (
-        <h1>Привет, {username}</h1>
-    );
-  };
-  
-  const mapStateToProps = (state) => ({
-    isLoggedIn: state.isLoggedIn,
-    username: state.username,
-  });
-  
-  const mapDispatchToProps = {
-    login,
-    logout,
-  };
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+      )}
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  username: state.auth.username,
+});
+
+const mapDispatchToProps = {
+  login,
+  logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
