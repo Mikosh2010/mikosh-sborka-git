@@ -7,13 +7,6 @@ import './UI/LoginPage.css';
 const LoginPage = ({login, isAuthenticated, error}) => {
 
     const [attr, setAttr] = useState("");
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      login({ username, password });
-    };
 
     return (
         <div>
@@ -22,7 +15,7 @@ const LoginPage = ({login, isAuthenticated, error}) => {
 
                 <div className="login__content">
                     <img src="https://i.imgur.com/Acblvqw.png" alt="" className="login__img" />
-                    <form className="login__box" onSubmit={handleSubmit}>
+                    <form className="login__box">
                         <div className="login__head">
                             <h3 className="login__title">Войти</h3>
                             <h3 className="login__subtitle">Вход в свой аккаунт</h3>
@@ -30,12 +23,12 @@ const LoginPage = ({login, isAuthenticated, error}) => {
 
                         <div className="login__inputs">
                             <div className="input__box login__input-box">
-                                <input type="text" required value={username} onChange={e => setUsername(e.target.value)}/>
+                                <input type="text" required/>
                                 <span className='input__text'>Введите логин</span>
                                 <i className='bottom-border'></i>
                             </div>
                             <div className="input__box pass-input__box">
-                                <input type={attr ? "text" : "password"} required value={password} onChange={e => setPassword(e.target.value)}/>
+                                <input type={attr ? "text" : "password"} required/>
                                 <span className='input__text'>Введите пароль</span>
                                 <i className={attr ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttr(!attr)}></i>
                                 <i className='bottom-border'></i>
@@ -58,9 +51,5 @@ const LoginPage = ({login, isAuthenticated, error}) => {
         </div>
     );
 }
-const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.auth.error
-  });
   
-export default connect(mapStateToProps, { login })(LoginPage);
+export default LoginPage;
