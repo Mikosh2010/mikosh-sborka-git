@@ -127,3 +127,10 @@
         padding: 9px 13px;
     }
 }
+
+@media screen and (max-width: 300px) {
+    .mods__item {
+        width: 230px;
+        height: 230px;
+    }
+}

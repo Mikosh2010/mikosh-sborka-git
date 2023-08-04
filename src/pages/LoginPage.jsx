@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login, logout } from '../actions/authActions';
@@ -9,10 +9,10 @@ const LoginForm = ({isLoggedIn, login}) => {
   const [password, setPassword] = useState("");
   const [attr, setAttr] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = useCallback((e) => {
     e.preventDefault();
     login(username, password);
-  };
+  }, [username, password, login]);
 
   console.log(isLoggedIn);
 
@@ -34,29 +34,34 @@ const LoginForm = ({isLoggedIn, login}) => {
 
               <div className="login__inputs">
                 <div className="input__box login__input-box">
-                  <input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} />
-                  <span className="input__text">Введите логин</span>
-                  <i className="bottom-border"></i>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder='Введите логин' 
+                    autoComplete='off'
+                    value={username} 
+                    onChange={(e) => setUsername(e.target.value)} 
+                  />
                 </div>
                 <div className="input__box pass-input__box">
                   <input
                     type={attr ? "text" : "password"}
                     required
+                    placeholder='Введите пароль'
+                    autoComplete='off'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <span className="input__text">Введите пароль</span>
                   <i
                     className={attr ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"}
                     onClick={() => setAttr(!attr)}
                   ></i>
-                  <i className="bottom-border"></i>
                 </div>
               </div>
               <div className="login__links">
                 <div className="login__remember">
-                  <input type="checkbox" id="check" />
-                  <label className="login__remember-text">Запомнить меня</label>
+                  <input type="checkbox" id="check" name='check'/>
+                  <label for="check" className="login__remember-text">Запомнить меня</label>
                 </div>
                 <div className="login__forgot">
                   <Link to="/" className="login__forgot-link">

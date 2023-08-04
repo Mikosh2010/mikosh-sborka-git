@@ -1,0 +1,137 @@
+a {
+    color: #fff;
+}
+
+button {
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
+.profile {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .6);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    transition: .3s;
+}
+
+.profile.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.profile__wrapper {
+    width: 300px;
+    height: 100vh;
+    padding: 20px;
+    position: absolute;
+    right: -20%;
+    top: 0;
+    z-index: 1;
+    background: #35213a;
+    transition: .4s;
+}
+
+.profile__wrapper.active {
+    right: 0;
+}
+
+.profile__close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.profile__nav-list {
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile__user {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #4a3151;
+}
+
+.profile__avatar {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: 50% 50% !important;
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile__name span {
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.profile__balance {
+    color: #f4a633;
+    font-weight: 500;
+}
+
+.profile__balance .profile__icon {
+    font-size: 16px;
+    margin-left: 2px;
+}
+
+.profile__balance.profile__item {
+    gap: 12px;
+}
+
+.profile__content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile__link {
+    font-size: 15px;
+}
+
+.profile__icon {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile__leave {
+    color: red;
+}
+
+.profile__leave button {
+    color: red;
+}

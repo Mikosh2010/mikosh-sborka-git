@@ -25,26 +25,23 @@ const RegisterPage = () => {
 
                         <div className="register__inputs">
                             <div className="input__box register__input-box">
-                                <input type="text" required="required" />
-                                <span className='input__text'>Введите никнейм</span>
-                                <i className='bottom-border'></i>
+                                <input
+                                 type="text" 
+                                 required 
+                                 placeholder='Введите ваше имя' 
+                                 autoComplete='off'
+                                />
                             </div>
                             <div className="input__box email__input-box">
-                                <input type="email" required="required" />
-                                <span className='input__text'>Введите ваш Email</span>
-                                <i className='bottom-border'></i>
+                                <input type="email" required placeholder='Введите ваш email' />
                             </div>
                             <div className="input__box pass-input__box">
-                                <input type={attr ? "text" : "password"} required="required" name='password'/>
-                                <span className='input__text'>Придумайте пароль</span>
+                                <input type={attr ? "text" : "password"} required name='password' placeholder='Придумайте пароль'/>
                                 <i className={attr ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttr(!attr)}></i>
-                                <i className='bottom-border'></i>
                             </div>
                             <div className="input__box pass-repeat__input-box">
-                                <input type={attrRepeat ? "text" : "password"} required="required" name='repeat-password'/>
-                                <span className='input__text'>Повторите пароль</span>
+                                <input type={attrRepeat ? "text" : "password"} required name='repeat-password' placeholder='Повторите пароль'/>
                                 <i className={attrRepeat ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttrRepeat(!attrRepeat)}></i>
-                                <i className='bottom-border'></i>
                             </div>
                         </div>
                         <button className="register__button">Зарегистрироваться</button>

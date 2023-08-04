@@ -1,10 +1,10 @@
-input:-internal-autofill-selected {
-    background-color: transparent !important;
-    background-image: none !important;
-    color: inherit !important;
-    appearance: none;
+input:-webkit-autofill, 
+input:-webkit-autofill:focus {
+    border: 10px solid #413047 !important;
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0px 1000px #413047 inset;
+    padding: 0 10px !important;
 }
-
 
 .login {
     padding: 100px 0;
@@ -57,39 +57,46 @@ input:-internal-autofill-selected {
     font-size: 18px;
 }
 
-.input__box {
+.login .input__box {
     background: none;
     position: relative;
     width: 380px !important;
-    margin-top: 35px ;
+    margin-top: 20px;
 }
 
-.input__box input {
+.login__inputs {
+    margin: 15px 0;
+}
+
+.login .input__box input {
+    height: 43px;
+    width: 100%;
     position: relative;
     z-index: 10;
-    width: 100%;
-    padding: 20px 15px 10px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #23242a;
-    background: none;
-    outline: none;
     border: none;
-    box-shadow: none;
-    transition: .5s;
+    outline: none;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #fff;
+    padding: 0 0 0 20px;
+    background: #413047;
 }
 
-.pass__input-box input {
-    font-size: 20px;
+.login .input__box input::placeholder {
+    color: #fff;
+}
+
+.pass__input-box input[type="password"] {
+    font-size: 25px;
     padding: 20px 15px 8px;
 }
 
-.pass__input-box .input__text {
+.pass__input-box .login .input__text {
     padding: 20px 0;
 }
 
 
-.input__text {
+.login .input__text {
     font-size: 16px;
     pointer-events: none;
     color: #fff;
@@ -100,8 +107,8 @@ input:-internal-autofill-selected {
     transition: .5s;
 }
 
-.input__box input:valid ~ .input__text,
-.input__box input:focus ~ .input__text {
+.login .input__box input:valid ~ .login .input__text,
+.login .input__box input:focus ~ .login .input__text {
     font-size: 14px;
     transform: translateY(-34px);
 }
@@ -109,17 +116,12 @@ input:-internal-autofill-selected {
 .pass__show {
     font-size: 20px;
     position: absolute;
-    right: 10px;
-    top: 20px;
+    right: 13px;
+    top: 12.5px;
     z-index: 100;
     color: #fff;
     cursor: pointer;
     transition: .5s;
-}
-
-.pass-input__box input:valid ~ .pass__show,
-.pass-input__box input:focus ~ .pass__show {
-    color: #000;
 }
 
 .bottom-border {
@@ -135,8 +137,8 @@ input:-internal-autofill-selected {
     pointer-events: none;
 }
 
-.input__box input:valid ~ .bottom-border,
-.input__box input:focus ~ .bottom-border {
+.login .input__box input:valid ~ .bottom-border,
+.login .input__box input:focus ~ .bottom-border {
     height: 40px;
 }
 
@@ -153,6 +155,7 @@ input:-internal-autofill-selected {
     display: flex;
     align-items: center;
     gap: 7px;
+    cursor: pointer;
 }
 
 .login__remember input {
@@ -196,9 +199,10 @@ input:-internal-autofill-selected {
 }
 
 .login__button {
+    width: 100%;
     margin-top: 30px;
-    padding: 13px 40px;
-    background: #583B5F;
+    padding: 13px 0;
+    background: #4f3456;
     border-radius: 10px;
     color: #fff;
     border: 0;
@@ -240,7 +244,7 @@ input:-internal-autofill-selected {
     .login__inputs, .login__links, .login__button {
         width: 100%;
     }
-    .input__box {
+    .login .input__box {
         width: auto !important;
     }
 }
@@ -267,7 +271,7 @@ input:-internal-autofill-selected {
     .login__inputs {
         width: 100%;
     }
-    .input__box {
+    .login .input__box {
         margin-bottom: 30px;
     }
     .login__head {

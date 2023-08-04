@@ -117,14 +117,11 @@ main {
 .intro__content {
     position: relative;
     z-index: 10;
+    margin-right: 100px;
 }
 
 .intro__welcome {
     font-size: 20px;
-}
-
-.intro__date {
-    font-weight: 700;
 }
 
 .intro__title {
@@ -165,8 +162,6 @@ main {
 
 .intro__image {
     width: 500px;
-    position: absolute;
-    right: 50px;
 }
 
 .about {
@@ -386,6 +381,41 @@ main {
 
 
 /* Adaptation */
+
+@media screen and (max-width: 1300px) {
+    /* Intro */
+    .intro__wrapper {
+        padding-left: 50px;
+    }
+    .intro__title {
+        font-size: 75px;
+    }
+}
+
+@media screen and (max-width: 1255px) {
+    /* Intro */
+    .intro__title {
+        font-size: 70px;
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    /* Intro */
+    .intro__wrapper {
+        display: flex;
+        justify-content: center;
+        padding-left: 0;
+    }
+    .intro__content {
+        margin-right: 0;
+    }
+    .intro__title {
+        font-size: 75px;
+    }
+    .intro__image {
+        display: none;
+    }
+}
 
 @media screen and (max-width: 1140px) {
 

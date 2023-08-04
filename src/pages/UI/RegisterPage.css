@@ -1,10 +1,11 @@
-input:-internal-autofill-selected {
-    background-color: transparent !important;
-    background-image: none !important;
-    color: inherit !important;
-    appearance: none;
+input:-webkit-autofill, 
+input:-webkit-autofill:focus {
+    border: 10px solid #413047 !important;
+    -webkit-text-fill-color: #fff;
+    caret-color: #fff;
+    -webkit-box-shadow: 0 0 0px 1000px #413047 inset;
+    padding: 0 10px !important;
 }
-
 
 .register {
     padding: 100px 0;
@@ -79,39 +80,41 @@ input:-internal-autofill-selected {
     font-size: 16px;
 }
 
-.input__box {
+.register .input__box {
     background: none;
     position: relative;
     width: 380px;
     margin-top: 35px;
 }
 
-.input__box input {
+.register .input__box input {
+    height: 43px;
+    width: 100%;
     position: relative;
     z-index: 10;
-    width: 100%;
-    padding: 20px 15px 10px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #23242a;
-    background: none;
-    outline: none;
     border: none;
-    box-shadow: none;
-    transition: .5s;
+    outline: none;
+    border-radius: 10px;
+    color: #fff;
+    padding: 0 0 0 20px;
+    background: #413047;
 }
 
-.pass__input-box input {
+.register .input__box input::placeholder {
+    color: #fff;
+}
+
+.register .pass__input-box input {
     font-size: 20px;
     padding: 20px 15px 8px;
 }
 
-.pass__input-box .input__text {
+.register .pass__input-box .register .input__text {
     padding: 20px 0;
 }
 
 
-.input__text {
+.register .input__text {
     font-size: 16px;
     pointer-events: none;
     color: #fff;
@@ -122,13 +125,13 @@ input:-internal-autofill-selected {
     transition: .5s;
 }
 
-.input__box input:valid ~ .input__text,
-.input__box input:focus ~ .input__text {
+.register .input__box input:valid ~ .register .input__text,
+.register .input__box input:focus ~ .register .input__text {
     font-size: 14px;
     transform: translateY(-34px);
 }
 
-.pass__show {
+.register .pass__show {
     font-size: 20px;
     position: absolute;
     right: 10px;
@@ -139,13 +142,13 @@ input:-internal-autofill-selected {
     transition: .5s;
 }
 
-.pass-input__box input:valid ~ .pass__show,
-.pass-input__box input:focus ~ .pass__show {
+.register .pass-input__box input:valid ~ .register .pass__show,
+.register .pass-input__box input:focus ~ .register .pass__show {
     color: #000;
 }
 
-.pass-repeat__input-box input:valid ~ .pass__show,
-.pass-repeat__input-box input:focus ~ .pass__show {
+.register .pass-repeat__input-box input:valid ~ .register .pass__show,
+.register .pass-repeat__input-box input:focus ~ .register .pass__show {
     color: #000;
 }
 
@@ -162,22 +165,22 @@ input:-internal-autofill-selected {
     pointer-events: none;
 }
 
-.input__box input:valid ~ .bottom-border,
-.input__box input:focus ~ .bottom-border {
+.register .input__box input:valid ~ .bottom-border,
+.register .input__box input:focus ~ .bottom-border {
     height: 40px;
 }
 
 .register__button {
-    width: 380px;
+    width: 100%;
     margin-top: 30px;
     padding: 13px 0;
-    background: #583B5F;
-    border-radius: 7px;
+    background: #4f3456;
+    border-radius: 10px;
     color: #fff;
     border: 0;
     outline: none;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition-duration: .25s;
 }
@@ -242,7 +245,7 @@ input:-internal-autofill-selected {
     .register__inputs {
         width: 100%;
     }
-    .input__box {
+    .register .input__box {
         margin-bottom: 30px;
     }
     .register__head {

@@ -81,7 +81,28 @@
     gap: 25px;
 }
 
-.noAccount {
+.nav__profile {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-left: 1px solid #fff;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+.nav__profile span {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.profileNone {
+    display: none;
+}
+
+.accountNone {
     display: none;
 }
 
