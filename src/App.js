@@ -1,23 +1,22 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import Time from './components/Time';
 
 import { MainPage } from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
+import RegisterPage from './pages/RegisterPage';
 import { NotFound } from './pages/NotFound';
 import PersonalArea from './pages/PersonalArea';
 import Product from './container/product/Product';
 
 function App() {
 
-  let uniqueId = Date.now();
-
   const products = [
     {
-      id: `${uniqueId}-black-capture`,
+      id: `black-capture`,
       name: 'Black Capture',
       price: '300',
       images: [
@@ -67,7 +66,7 @@ function App() {
       modsImgSrc: "https://i.ibb.co/R7QCmX8/Black-Capture.jpg",
     },
     {
-      id: `${uniqueId}-cyber-radmir`,
+      id: `cyber-radmir`,
       name: 'Cyber Radmir',
       price: '300',
       images: [
@@ -80,7 +79,7 @@ function App() {
       modsImgSrc: "https://i.ibb.co/dJhv51J/Cyber-Radmir.jpg"
     },
     {
-      id: `${uniqueId}-sborka-na-zakaz`,
+      id: `sborka-na-zakaz`,
       name: 'Сборка на заказ',
       price: '600',
       images: [
@@ -92,7 +91,7 @@ function App() {
 
       modsImgSrc: "https://i.ibb.co/RcQyvBn/image.jpg",
     }
-  ]
+  ] 
 
   return (
     <div>
@@ -105,17 +104,27 @@ function App() {
 
       <Header />
 
-      <Routes>
-        <Route path='/' element={<MainPage products={products}/>} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
+      <AnimatePresence mode="wait">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Routes>
+            <Route path='/' element={<MainPage products={products}/>} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
 
-        <Route path='/area' element={<PersonalArea/>} />
+            <Route path='/area' element={<PersonalArea/>} />
 
-        <Route path='/product/:productId' element={<Product products={products} />} />
+            {/* Используем Outlet для вложенных маршрутов */}
+            <Route path='/product/:productId' element={<Product products={products} />} />
 
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
       <Time />
     </div>
   );

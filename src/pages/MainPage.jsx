@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import ScrollUp from "../components/ScrollUp";
 import Edge from "../components/Edge";
 import Questions from '../components/Questions';
@@ -56,7 +57,12 @@ const MainPage = ({products}) => {
   }, []);
 
     return (
-        <div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5 }}
+        >
             <main className="main">
                 {/* Intro */}
                 <section className="intro" id="intro">
@@ -199,7 +205,7 @@ const MainPage = ({products}) => {
             <Footer/>
 
             <ScrollUp />
-        </div>
+        </motion.div>
     );
 };
 

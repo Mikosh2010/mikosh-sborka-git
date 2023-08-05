@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { logout } from '../actions/authActions';
 import './UI/ProfileNav.css';
 
 const ProfileNav = ({ profileActive, setProfileActive, username, balance, logout, isLoggedIn }) => {
 
-    return (
+    const dispatch = useDispatch();
+
+    const onLogout = useCallback(() => {
+        dispatch(logout()); // Вызываем action creator для выхода из системы
+    }, [dispatch, logout]);
+
+    return isLoggedIn ? (
         <div className={profileActive ? "profile active" : "profile"} onClick={() => setProfileActive(false)}>
             <div className={profileActive ? "profile__wrapper active" : "profile__wrapper"} onClick={e => e.stopPropagation()}>
                 <i className="ri-close-line profile__close" onClick={() => setProfileActive(false)}></i>
@@ -56,14 +62,17 @@ const ProfileNav = ({ profileActive, setProfileActive, username, balance, logout
                         </div>
 
                         <div className="profile__item profile__leave" onClick={() => setProfileActive(false)}>
-                            <i class="uil uil-signout profile__icon"></i> <button onClick={logout}>Выйти</button>
+                            <i class="uil uil-signout profile__icon"></i> <button onClick={onLogout}>Выйти</button>
                         </div>
 
                     </ui>
                 </nav>
             </div>
         </div>
-    );
+    ) : (
+        <>
+        </>
+    )
 }
 
 const mapStateToProps = (state) => ({

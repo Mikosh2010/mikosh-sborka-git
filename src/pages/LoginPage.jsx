@@ -1,29 +1,91 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import ScrollReveal from 'scrollreveal';
 import { Navigate, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { login, logout } from '../actions/authActions';
+import { connect, useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
+import { login, logout, setRememberMe } from '../actions/authActions';
 import './UI/LoginPage.css';
 
-const LoginForm = ({isLoggedIn, login}) => {
+const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
+
+  useEffect(() => {
+    const sr = ScrollReveal();
+
+    sr.reveal('.login__content, .login__img', {
+      duration: 1500,
+      distance: '30px',
+      delay: 200,
+      opacity: 0,
+      origin: 'top',
+      interval: 150,
+    });
+    sr.reveal('.login__title, .login__subtitle, .input__box, .login__button', {
+      duration: 1500,
+      distance: '30px',
+      delay: 500,
+      opacity: 0,
+      origin: 'top',
+      interval: 150,
+    });
+    sr.reveal('.login__remember', {
+      duration: 1500,
+      distance: '30px',
+      delay: 500,
+      opacity: 0,
+      origin: 'left',
+      interval: 150,
+    });
+    sr.reveal('.login__forgot', {
+      duration: 1500,
+      distance: '30px',
+      delay: 500,
+      opacity: 0,
+      origin: 'right',
+      interval: 150,
+    });
+    sr.reveal('.login__to-register', {
+      duration: 1500,
+      distance: '30px',
+      delay: 500,
+      opacity: 0,
+      origin: 'bottom',
+      interval: 150,
+    });
+  }, []);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [attr, setAttr] = useState(false);
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    login(username, password);
-  }, [username, password, login]);
+  const dispatch = useDispatch();
 
-  console.log(isLoggedIn);
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(login(username, password));
+    },
+    [username, password, dispatch, login]
+  );
+
+  const handleCheckboxChange = (e) => {
+    dispatch(setRememberMe(e.target.checked));
+  };
+
+  useEffect(() => {
+    setUsername(isLoggedIn ? isLoggedIn.username : '');
+  }, [isLoggedIn]);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
       {isLoggedIn ? (
-        <Navigate replace to="/"/>
+        <Navigate to="/" />
       ) : (
         <div className="login">
-          <h1 className="login__main-title">АВТОРИЗАЦИЯ</h1>
-
           <div className="login__content">
             <img src="https://i.imgur.com/Acblvqw.png" alt="" className="login__img" />
             <form className="login__box" onSubmit={onSubmit}>
@@ -34,13 +96,13 @@ const LoginForm = ({isLoggedIn, login}) => {
 
               <div className="login__inputs">
                 <div className="input__box login__input-box">
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder='Введите логин' 
+                  <input
+                    type="text"
+                    required
+                    placeholder='Введите логин'
                     autoComplete='off'
-                    value={username} 
-                    onChange={(e) => setUsername(e.target.value)} 
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
                 <div className="input__box pass-input__box">
@@ -60,7 +122,13 @@ const LoginForm = ({isLoggedIn, login}) => {
               </div>
               <div className="login__links">
                 <div className="login__remember">
-                  <input type="checkbox" id="check" name='check'/>
+                  <input
+                    type="checkbox"
+                    id="check"
+                    name="check"
+                    checked={rememberMe}
+                    onChange={handleCheckboxChange}
+                  />
                   <label for="check" className="login__remember-text">Запомнить меня</label>
                 </div>
                 <div className="login__forgot">
@@ -79,13 +147,14 @@ const LoginForm = ({isLoggedIn, login}) => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isLoggedIn,
   username: state.auth.username,
+  rememberMe: state.auth.rememberMe,
 });
 
 const mapDispatchToProps = {

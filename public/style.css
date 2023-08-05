@@ -8,6 +8,31 @@
     src: url(fonts/GothamPro-Bold.3cabf0ca.ttf) format("truetype");
 }
 
+
+/* Transition Group */
+
+/* Анимация для входа на страницу */
+.page-enter {
+    opacity: 0;
+}
+
+.page-enter-active {
+    opacity: 1;
+    transition: .9s ease-in-out;
+}
+
+/* Анимация для выхода со страницы */
+/* Для анимации добавляем класс "page-exit" и "page-exit-active" */
+/* transition указывает длительность и эффект анимации */
+.page-exit {
+    opacity: 1;
+}
+
+.page-exit-active {
+    opacity: 0;
+    transition: .9s ease-in-out;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -38,7 +63,8 @@ ul {
     list-style: none;
 }
 
-a, button {
+a,
+button {
     text-decoration: none;
     outline: none;
     cursor: pointer;
@@ -342,14 +368,14 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: hsl(287, 21%, 26%);
-  border-radius: .5rem;
-  transition-duration: .25s;
+    background-color: hsl(287, 21%, 26%);
+    border-radius: .5rem;
+    transition-duration: .25s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: hsl(287, 21%, 36%);
-  transition-duration: .25s;
+    background-color: hsl(287, 21%, 36%);
+    transition-duration: .25s;
 }
 
 
@@ -366,16 +392,16 @@ main {
     box-shadow: 0 4px 12px hsla(228, 15%, 8%, .4);
     z-index: 100;
     transition: bottom .4s, transform .4s;
-  }
-  
+}
+
 .scrollup:hover {
-  transform: translateY(-.25rem);
+    transform: translateY(-.25rem);
 }
 
 /* Show Scroll Up */
 
 .show-scroll {
-  bottom: 2rem;
+    bottom: 2rem;
 }
 
 
@@ -383,16 +409,19 @@ main {
 /* Adaptation */
 
 @media screen and (max-width: 1300px) {
+
     /* Intro */
     .intro__wrapper {
         padding-left: 50px;
     }
+
     .intro__title {
         font-size: 75px;
     }
 }
 
 @media screen and (max-width: 1255px) {
+
     /* Intro */
     .intro__title {
         font-size: 70px;
@@ -400,18 +429,22 @@ main {
 }
 
 @media screen and (max-width: 1180px) {
+
     /* Intro */
     .intro__wrapper {
         display: flex;
         justify-content: center;
         padding-left: 0;
     }
+
     .intro__content {
         margin-right: 0;
     }
+
     .intro__title {
         font-size: 75px;
     }
+
     .intro__image {
         display: none;
     }
@@ -440,27 +473,34 @@ main {
     .header__image {
         display: flex !important;
     }
+
     .intro__title {
         margin-top: 0;
         font-size: 75px;
     }
+
     .intro__subtitle {
         font-size: 16px;
         margin: 20px auto 5px;
     }
+
     .intro__desc {
         max-width: 720px;
     }
+
     .intro__image {
         display: none;
     }
+
     .intro__wrapper {
         padding: 0;
         justify-content: center;
     }
+
     .intro__content {
         text-align: center;
     }
+
     .intro__button {
         width: 220px;
         margin: 0 auto;
@@ -502,6 +542,7 @@ main {
     .scrollup {
         right: 1rem;
     }
+
     .show-scroll {
         bottom: 5rem;
     }
@@ -514,6 +555,7 @@ main {
         margin-bottom: 0;
         height: 8rem;
     }
+
     .footer__header .header__logo {
         width: 170px;
     }
@@ -534,9 +576,11 @@ main {
         font-size: 65px;
         margin-bottom: 0;
     }
+
     .intro__subtitle {
         font-size: 16px;
     }
+
     .intro__desc {
         max-width: 525px;
         margin: 0 auto 50px;
@@ -550,6 +594,7 @@ main {
 }
 
 @media screen and (max-width: 650px) {
+
     /* Intro */
     .intro__title {
         font-size: 60px;
@@ -558,18 +603,22 @@ main {
 
 
 @media screen and (max-width: 600px) {
+
     /* Intro */
     .intro__title {
         font-size: 50px;
     }
+
     .intro__subtitle {
         font-size: 14px;
         max-width: 550px;
         margin: 0 auto 20px;
     }
+
     .intro__desc {
         font-size: 13px;
     }
+
     .intro__button {
         width: 200px;
         padding: 10px 0;
@@ -610,25 +659,30 @@ main {
     .nav__list {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .personal-area {
         width: 210%;
     }
+
     .login__link {
         margin-left: 0;
         margin-right: 0;
     }
+
     .register__link {
         margin-left: 0;
         margin-right: 0;
     }
-    
+
     /* Intro */
     .intro__title {
         font-size: 45px;
     }
+
     .intro__subtitle {
         padding: 0 30px;
     }
+
     .intro__desc {
         max-width: 400px;
     }
@@ -649,6 +703,7 @@ main {
 }
 
 @media screen and (max-width: 500px) {
+
     /* Questions */
     .questions__content {
         padding: 0 20px;
@@ -663,40 +718,48 @@ main {
     .intro__title {
         font-size: 40px;
     }
+
     .intro__desc {
         max-width: 390px;
     }
 }
 
 @media screen and (max-width: 400px) {
+
     /* Section */
     .section__title {
         padding: 0 15px;
     }
-    
+
     /* Intro */
     .header__image {
         top: 15px;
     }
+
     .intro__wrapper {
         flex-direction: column;
         margin-top: 80px;
     }
+
     .intro__title {
         font-size: 33px;
     }
+
     .intro__subtitle {
         font-size: 12.5px;
         padding: 0 20px;
         margin: 5px auto 40px;
     }
+
     .intro__desc {
         display: none;
     }
+
     .intro__button {
         padding: 10px 25px;
         font-size: 14px;
     }
+
     .intro__image {
         display: block;
         margin-top: 30px;
@@ -719,9 +782,11 @@ main {
         font-size: 11px;
         padding: 2px 0px 2px 10px;
     }
+
     .questions__arrow {
         font-size: 25px;
     }
+
     .questions__desc {
         font-size: 12px;
     }
@@ -748,20 +813,24 @@ main {
     .intro {
         height: auto !important;
     }
+
     .intro__wrapper {
         margin-top: 0;
     }
+
     .intro__title {
         margin-top: 200px !important;
         font-size: 30px;
         text-align: center;
     }
+
     .intro__subtitle {
         text-align: center;
         font-size: 12px;
         padding: 0 20px;
         font-weight: 400;
     }
+
     .intro__image {
         width: 200px;
         margin-top: 50px;
@@ -783,10 +852,12 @@ main {
     .intro__title {
         font-size: 25px;
     }
+
     .intro__subtitle {
         font-size: 10px;
         text-align: center;
     }
+
     .intro__button {
         width: 180px;
     }

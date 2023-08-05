@@ -7,8 +7,8 @@ input:-webkit-autofill:focus {
 }
 
 .login {
-    padding: 100px 0;
-    height: auto;
+    margin-top: 2rem;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,6 +24,7 @@ input:-webkit-autofill:focus {
 .login__content {
     display: flex;
     border: 3px solid #583B5F;
+    overflow: hidden;
 }
 
 .login__img {
