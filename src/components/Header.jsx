@@ -86,7 +86,7 @@ function Header({username, isLoggedIn}) {
                             <i className="uil uil-message nav__icon"></i><div className="nav__link">Контакты</div>
                         </a>
                         <div className={isLoggedIn ? "nav__profile" : "nav__profile profileNone"} onClick={() => setNavProfile  (!navProfile)}>
-                            <i class="fa-solid fa-circle-user"></i> <span>{username}</span>
+                            <i className="fa-solid fa-circle-user"></i> <span>{username}</span>
                         </div>
                         <div className={isLoggedIn ? "nav__account accountNone" : "nav__account"}>
                             <NavLink to="/login" className="login__link">

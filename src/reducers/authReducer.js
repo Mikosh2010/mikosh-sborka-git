@@ -24,7 +24,7 @@ const authReducer = (state = initialState, action) => {
         return state;
       };
     case 'REGISTER':
-      Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 * 60 * 60 }); // Установите время действия cookies в 1 день или 1 год, в зависимости от rememberMe
+      Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 }); // Установите время действия cookies в 1 день или 1 год, в зависимости от rememberMe
       Cookies.set('username', action.payload.username); // Сохраняем username в куку
       return {
         ...state,

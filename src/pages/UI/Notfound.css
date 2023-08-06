@@ -48,7 +48,7 @@ main {
 }
 
 :root {
-    --ghost: #528cce;
+    --ghost: #4f3456;
     --heading: #e7ebf2;
 }
 
@@ -97,6 +97,12 @@ main {
     color: #fff;
     border-radius: 30px;
     font-size: 16px;
+    transition: .25s ease-in-out;
+}
+
+.home__link:hover {
+    background: #bba9cb;
+    color: #000;
 }
 
 @media (max-width: 30rem) {
