@@ -18,6 +18,7 @@ const authReducer = (state = initialState, action) => {
       // Здесь можно добавить запрос к серверу для проверки логина и пароля
       // Предположим, что сервер возвращает объект с полями loggedIn и username
       if (action.payload.loggedIn) {
+        
         Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 }); // Установите время действия cookies в 1 день или 1 год, в зависимости от rememberMe
         Cookies.set('username', action.payload.username); // Сохраняем username в куку
         return {

@@ -4,8 +4,6 @@ import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8080/api/auth';
 
-// ... (ваш существующий код)
-
 export const login = (username, password) => {
   return (dispatch) => {
     axios
@@ -16,13 +14,14 @@ export const login = (username, password) => {
       .then((response) => {
         if (response.status === 200 && response.data.loggedIn) {
           dispatch({
-            type: 'LOGIN',
+            type: 'LOGIN', // Используйте переменную LOGIN, определенную вверху файла
             payload: {
               username: response.data.username,
+              loggedIn: response.data.loggedIn,
             },
           });
         } else {
-          // Обработка ошибки, если авторизация не удалась
+          console.error('Ошибка при авторизации');
         }
       })
       .catch((error) => {
@@ -32,12 +31,17 @@ export const login = (username, password) => {
 };
 
 export const register = (username, email, password) => {
+  const firstName = "Mikosh"
+  const lastName ="Pikosh"
   return (dispatch) => {
     axios
       .post(`${API_BASE_URL}/signup`, {
         username,
         email,
         password,
+        firstName,
+        lastName
+        
       })
       .then((response) => {
         if (response.status === 200) {
@@ -57,4 +61,15 @@ export const register = (username, email, password) => {
   };
 };
 
-// ... (ваш существующий код)
+export const logout = () => {
+  return {
+    type: 'LOGOUT'
+  };
+};
+
+export const setRememberMe = (value) => {
+  return {
+    type: 'SET_REMEMBER_ME',
+    payload: value,
+  };
+};
