@@ -1,5 +1,3 @@
-// src/actions/authActions.js
-
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8080/api/auth';
@@ -31,17 +29,12 @@ export const login = (username, password) => {
 };
 
 export const register = (username, email, password) => {
-  const firstName = "Mikosh"
-  const lastName ="Pikosh"
   return (dispatch) => {
     axios
       .post(`${API_BASE_URL}/signup`, {
         username,
         email,
-        password,
-        firstName,
-        lastName
-        
+        password
       })
       .then((response) => {
         if (response.status === 200) {
@@ -56,7 +49,7 @@ export const register = (username, email, password) => {
         }
       })
       .catch((error) => {
-        // Обработка ошибки
+        console.error('Ошибка при регистрации,', error);
       });
   };
 };
