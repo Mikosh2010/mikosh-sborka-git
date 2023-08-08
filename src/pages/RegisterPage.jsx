@@ -43,12 +43,22 @@ const RegisterPage = ({ isLoggedIn }) => {
     const [attr, setAttr] = useState(false);
     const [attrRepeat, setAttrRepeat] = useState(false);
     const [emailValid, setEmailValid] = useState(false);
+    const [errorMessages, setErrorMessages] = useState({
+        email: "",
+        passwordMatch: "",
+    });
 
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
         // Пример валидации email с использованием регулярного выражения
         setEmailValid(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu.test(value));
+
+        // Сброс сообщения об ошибке email
+        setErrorMessages((prevState) => ({
+            ...prevState,
+            email: "",
+        }));
     };
 
     const dispatch = useDispatch();
@@ -56,9 +66,26 @@ const RegisterPage = ({ isLoggedIn }) => {
     const handleSubmit = useCallback(
         (e) => {
             e.preventDefault();
+            if (!emailValid) {
+                // Вывод ошибки о неверном формате email
+                setErrorMessages((prevState) => ({
+                    ...prevState,
+                    email: "Неправильный формат Email",
+                }));
+                return;
+            }
+
+            if (password !== repeatPassword) {
+                // Вывод ошибки о несовпадении паролей
+                setErrorMessages((prevState) => ({
+                    ...prevState,
+                    passwordMatch: "Пароли не совпадают",
+                }));
+                return;
+            }
             dispatch(register(username, email, password));
         },
-        [username, email, password, dispatch]
+        [username, email, password, emailValid, repeatPassword, dispatch]
     );
 
     return (
@@ -95,14 +122,16 @@ const RegisterPage = ({ isLoggedIn }) => {
                                     />
                                 </div>
                                 <div className="input__box email__input-box">
-                                    <div className={emailValid ? "email__valid-text" : "email__valid-text invalid-email"}>Неправильный формат Email, формат должен совпадать с <strong>user@user.ru</strong></div>
+                                    {errorMessages.email && (
+                                        <div className="register__error-message">{errorMessages.email}</div>
+                                    )}
                                     <input
                                         type="email"
                                         required
                                         placeholder='Введите ваш email'
                                         value={email}
                                         onChange={handleEmailChange}
-                                        className={emailValid ? "valid" : "invalid"}
+                                        className={emailValid ? "email__valid" : "email__invalid"}
                                     />
                                 </div>
                                 <div className="input__box pass-input__box">
@@ -117,6 +146,9 @@ const RegisterPage = ({ isLoggedIn }) => {
                                     <i className={attr ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttr(!attr)}></i>
                                 </div>
                                 <div className="input__box pass-repeat__input-box">
+                                    {errorMessages.passwordMatch && (
+                                        <div className="register__error-message">{errorMessages.passwordMatch}</div>
+                                    )}
                                     <input
                                         type={attrRepeat ? "text" : "password"}
                                         required name='repeat-password'
@@ -130,6 +162,12 @@ const RegisterPage = ({ isLoggedIn }) => {
                             <button className="register__button">Зарегистрироваться</button>
                             <div className="register__to-login">У вас уже есть аккаунт? <Link to="/login">Авторизуйтесь</Link></div>
                         </form>
+                        {errorMessages.email && (
+                            <div className="register__error-message">{errorMessages.email}</div>
+                        )}
+                        {errorMessages.passwordMatch && (
+                            <div className="register__error-message">{errorMessages.passwordMatch}</div>
+                        )}
                     </div>
                 </div>
             )}

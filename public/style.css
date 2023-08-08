@@ -111,7 +111,7 @@ main {
 /* Intro */
 
 .intro {
-    height: 850px;
+    height: 96vh;
     background: url("https://i.imgur.com/VpeWKgF.jpg") center no-repeat;
     background-size: cover;
     display: flex;
