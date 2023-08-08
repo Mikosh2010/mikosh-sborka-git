@@ -10,48 +10,56 @@ const RegisterPage = ({ isLoggedIn }) => {
 
     useEffect(() => {
         const sr = ScrollReveal();
-    
+
         sr.reveal('.register__content, .register__img, .input__box', {
-          duration: 1500,
-          distance: '30px',
-          delay: 200,
-          opacity: 0,
-          origin: 'top',
-          interval: 150,
+            duration: 1500,
+            distance: '30px',
+            delay: 200,
+            opacity: 0,
+            origin: 'top',
+            interval: 150,
         });
         sr.reveal('.register__title, .register__subtitle', {
-          duration: 1500,
-          distance: '30px',
-          delay: 500,
-          opacity: 0,
-          origin: 'left',
-          interval: 150,
+            duration: 1500,
+            distance: '30px',
+            delay: 500,
+            opacity: 0,
+            origin: 'left',
+            interval: 150,
         });
         sr.reveal('.register__to-login, .register__button', {
-          duration: 1500,
-          distance: '30px',
-          delay: 500,
-          opacity: 0,
-          origin: 'bottom',
+            duration: 1500,
+            distance: '30px',
+            delay: 500,
+            opacity: 0,
+            origin: 'bottom',
         });
-      }, []);
+    }, []);
 
-      const [username, setUsername] = useState("");
-      const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
-      const [repeatPassword, setRepeatPassword] = useState("");
-      const [attr, setAttr] = useState(false);
-      const [attrRepeat, setAttrRepeat] = useState(false);
-    
-      const dispatch = useDispatch();
-    
-      const handleSubmit = useCallback(
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [repeatPassword, setRepeatPassword] = useState("");
+    const [attr, setAttr] = useState(false);
+    const [attrRepeat, setAttrRepeat] = useState(false);
+    const [emailValid, setEmailValid] = useState(false);
+
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+        // Пример валидации email с использованием регулярного выражения
+        setEmailValid(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu.test(value));
+    };
+
+    const dispatch = useDispatch();
+
+    const handleSubmit = useCallback(
         (e) => {
-          e.preventDefault();
-          dispatch(register(username, email, password));
+            e.preventDefault();
+            dispatch(register(username, email, password));
         },
         [username, email, password, dispatch]
-      );
+    );
 
     return (
         <motion.div
@@ -78,41 +86,43 @@ const RegisterPage = ({ isLoggedIn }) => {
                             <div className="register__inputs">
                                 <div className="input__box register__input-box">
                                     <input
-                                    type="text" 
-                                    required 
-                                    placeholder='Введите ваше имя' 
-                                    autoComplete='off'
-                                    value={username}
-                                    onChange={e => setUsername(e.target.value)}
+                                        type="text"
+                                        required
+                                        placeholder='Введите ваше имя'
+                                        autoComplete='off'
+                                        value={username}
+                                        onChange={e => setUsername(e.target.value)}
                                     />
                                 </div>
                                 <div className="input__box email__input-box">
+                                    <div className={emailValid ? "email__valid-text" : "email__valid-text invalid-email"}>Неправильный формат Email, формат должен совпадать с <strong>user@user.ru</strong></div>
                                     <input
-                                    type="email" 
-                                    required 
-                                    placeholder='Введите ваш email' 
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
+                                        type="email"
+                                        required
+                                        placeholder='Введите ваш email'
+                                        value={email}
+                                        onChange={handleEmailChange}
+                                        className={emailValid ? "valid" : "invalid"}
                                     />
                                 </div>
                                 <div className="input__box pass-input__box">
                                     <input
-                                    type={attr ? "text" : "password"} 
-                                    required 
-                                    name='password' 
-                                    placeholder='Придумайте пароль'
-                                    value={password}
-                                    onChange={e => setPassword(e.target.value)}
+                                        type={attr ? "text" : "password"}
+                                        required
+                                        name='password'
+                                        placeholder='Придумайте пароль'
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
                                     />
                                     <i className={attr ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttr(!attr)}></i>
                                 </div>
                                 <div className="input__box pass-repeat__input-box">
-                                    <input 
-                                    type={attrRepeat ? "text" : "password"} 
-                                    required name='repeat-password' 
-                                    placeholder='Повторите пароль'
-                                    value={repeatPassword}
-                                    onChange={e => setRepeatPassword(e.target.value)}
+                                    <input
+                                        type={attrRepeat ? "text" : "password"}
+                                        required name='repeat-password'
+                                        placeholder='Повторите пароль'
+                                        value={repeatPassword}
+                                        onChange={e => setRepeatPassword(e.target.value)}
                                     />
                                     <i className={attrRepeat ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttrRepeat(!attrRepeat)}></i>
                                 </div>
@@ -130,5 +140,5 @@ const RegisterPage = ({ isLoggedIn }) => {
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
 });
-  
+
 export default connect(mapStateToProps)(RegisterPage);
