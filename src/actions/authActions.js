@@ -25,8 +25,8 @@ export const login = (username, password) => {
         }
       })
       .catch((error) => {
-        // Обработка ошибки
-      });
+      // Обработка ошибки
+    });
   };
 };
 

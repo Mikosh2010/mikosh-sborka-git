@@ -62,9 +62,9 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(login(username, password));
+      login(username, password);
     },
-    [username, password, dispatch, login]
+    [username, password, login]
   );
 
   const handleCheckboxChange = (e) => {
@@ -129,7 +129,7 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
                     checked={rememberMe}
                     onChange={handleCheckboxChange}
                   />
-                  <label for="check" className="login__remember-text">Запомнить меня</label>
+                  <label htmlFor="check" className="login__remember-text">Запомнить меня</label>
                 </div>
                 <div className="login__forgot">
                   <Link to="/" className="login__forgot-link">
