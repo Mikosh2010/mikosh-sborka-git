@@ -55,11 +55,58 @@ export const register = (username, email, password) => {
             email: email,
           },
         });
+
+        // Устанавливаем флаг успешного подтверждения email
+        dispatch(setEmailConfirmed(true));
+
+        // Выполняем вход в аккаунт
+        dispatch({
+          type: 'LOGIN',
+          payload: {
+            username: response.data.username,
+            loggedIn: true,
+          },
+        });
       } else {
         alert('Ошибка при регистрации. Покажите этот код администрации: ' + response.status);
       }
     } catch (error) {
       alert('Ошибка при регистрации. Покажите эту ошибку администрации: ' + error);
+    }
+  };
+};
+
+
+export const setEmailConfirmed = (value) => {
+  return {
+    type: 'SET_EMAIL_CONFIRMED',
+    payload: value,
+  };
+};
+
+export const checkEmailConfirmation = (email) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/isConfirmed?email=${email}`);
+      if (response.data.confirmed) {
+        dispatch(setEmailConfirmed(true));
+        dispatch({
+          type: 'LOGIN',
+          payload: {
+            username: getState().auth.username,
+            loggedIn: true,
+          },
+        });
+      } else {
+        dispatch(setEmailConfirmed(false));
+      }
+    } catch (error) {
+      dispatch({
+        type: 'LOGIN_FAILURE',
+        payload: {
+          error: 'Error checking user confirmation.',
+        },
+      });
     }
   };
 };
