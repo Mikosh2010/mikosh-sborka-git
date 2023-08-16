@@ -87,7 +87,7 @@ const RegisterPage = ({ isLoggedIn }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
         >
-            {showConfirmModal && <ConfirmModal isEmailConfirmed={showConfirmModal}/>}
+            <ConfirmModal isEmailConfirmed={showConfirmModal}/>
 
             
             {isLoggedIn ? (
