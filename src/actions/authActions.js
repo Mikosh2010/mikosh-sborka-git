@@ -40,6 +40,7 @@ export const login = (username, password) => {
 };
 
 export const register = (username, email, password) => {
+  console.log('Register called with:', username, email, password);
   return (dispatch) => {
     axios
       .post(`${API_BASE_URL}/signup`, {
@@ -54,7 +55,7 @@ export const register = (username, email, password) => {
             type: 'REGISTER',
             payload: {
               username: response.data.username,
-              email: response.data.email,
+              email: email, // Используйте переменную email
             },
           });
         } else {

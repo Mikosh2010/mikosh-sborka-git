@@ -44,39 +44,34 @@ const authReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
     case REGISTER:
-      axios.get(`http://localhost:8080/api/users/isConfirmed?${action.payload.email}`)
-          .then(response => {
-            if (response.data.confirmed) {
-              alert(response.data.confirmed)
-              // User is confirmed, set isLoggedIn, username, and cookies
-              Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
-              Cookies.set('username', action.payload.username);
-              return {
-                ...state,
-                isLoggedIn: true,
-                username: action.payload.username,
-              };
-            } else {
-              // User is not confirmed, update state accordingly
-              return {
-                ...state,
-                isLoggedIn: false,
-                error: 'User is not confirmed.', // You can set a relevant error message
-              };
-            }
-          })
-          .catch(error => {
+      axios
+        .get(`http://localhost:8080/api/users/isConfirmed?email=${action.payload.email}`)
+        .then((response) => {
+          if (response.data.confirmed) {
+            // User is confirmed, set isLoggedIn, username, and cookies
+            Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
+            Cookies.set('username', action.payload.username);
             return {
               ...state,
-              error: 'Error checking user confirmation.', // Handle the error as needed
+              isLoggedIn: true,
+              username: action.payload.username,
             };
-          });
-      return {
-        ...state,
-        isLoggedIn: true,
-        username: action.payload.username,
-        email: action.payload.email,
-      };
+          } else {
+            // User is not confirmed, update state accordingly
+            return {
+              ...state,
+              isLoggedIn: false,
+              error: 'User is not confirmed.',
+            };
+          }
+        })
+        .catch((error) => {
+          return {
+            ...state,
+            error: 'Error checking user confirmation.',
+          };
+        });
+      return state; // Возвращаем текущее состояние до завершения асинхронной операции      
     case LOGOUT:
       Cookies.remove('isLoggedIn');
       Cookies.remove('username');
