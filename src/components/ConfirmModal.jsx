@@ -6,7 +6,7 @@ const ConfirmModal = ({ isEmailConfirmed }) => {
     return (
         <div>
             <div className={isEmailConfirmed ? "confirm active" : "confirm"}>
-                <div className={isEmailConfirmed ? "confirm__wrapper active" : "confirm__wrapper"}>
+                <div className={isEmailConfirmed ? "confirm__wrapper active" : "confirm_++_wrapper"}>
                     <i className="ri-check-line confirm__icon"></i>
                     <div className="confirm__title">Вы почти у цели!</div>
                     <div className="confirm__subtitle">Осталось совсем чу-чуть!</div>

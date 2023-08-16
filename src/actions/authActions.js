@@ -49,22 +49,20 @@ export const register = (username, email, password) => {
       })
       .then((response) => {
         if (response.status === 200) {
+          // Обновление состояния после успешной регистрации
           dispatch({
             type: 'REGISTER',
             payload: {
               username: response.data.username,
+              email: response.data.email,
             },
           });
-          dispatch({
-            type: 'SET_EMAIL_CONFIRMED',
-            payload: true,
-          });
         } else {
-          alert('Ошибка при регистрации ' + response + " Покажите этот код администрации.")
+          alert('Ошибка при регистрации. Покажите этот код администрации: ' + response.status);
         }
       })
       .catch((error) => {
-        alert('Ошибка при регистрации,' + error + "Покажите эту ошибку администрации.");
+        alert('Ошибка при регистрации. Покажите эту ошибку администрации: ' + error);
       });
   };
 };

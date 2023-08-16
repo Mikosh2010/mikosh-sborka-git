@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 export const LOGIN = 'LOGIN';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -43,17 +44,36 @@ const authReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
     case REGISTER:
-      Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
-      Cookies.set('username', action.payload.username);
+      axios.get(`http://localhost:8080/isConfirmed?${action.payload.email}`)
+          .then(response => {
+            if (response.data.confirmed) {
+              // User is confirmed, set isLoggedIn, username, and cookies
+              Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
+              Cookies.set('username', action.payload.username);
+              return {
+                ...state,
+                isLoggedIn: true,
+                username: action.payload.username,
+              };
+            } else {
+              // User is not confirmed, update state accordingly
+              return {
+                ...state,
+                error: 'User is not confirmed.', // You can set a relevant error message
+              };
+            }
+          })
+          .catch(error => {
+            return {
+              ...state,
+              error: 'Error checking user confirmation.', // Handle the error as needed
+            };
+          });
       return {
         ...state,
         isLoggedIn: true,
         username: action.payload.username,
-      };
-    case SET_EMAIL_CONFIRMED:
-      return {
-        ...state,
-        isEmailConfirmed: action.payload,
+        email: action.payload.email,
       };
     case LOGOUT:
       Cookies.remove('isLoggedIn');
