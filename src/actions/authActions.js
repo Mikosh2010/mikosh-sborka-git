@@ -40,31 +40,27 @@ export const login = (username, password) => {
 };
 
 export const register = (username, email, password) => {
-  console.log('Register called with:', username, email, password);
-  return (dispatch) => {
-    axios
-      .post(`${API_BASE_URL}/signup`, {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/signup`, {
         username,
         email,
-        password
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          // Обновление состояния после успешной регистрации
-          dispatch({
-            type: 'REGISTER',
-            payload: {
-              username: response.data.username,
-              email: email, // Используйте переменную email
-            },
-          });
-        } else {
-          alert('Ошибка при регистрации. Покажите этот код администрации: ' + response.status);
-        }
-      })
-      .catch((error) => {
-        alert('Ошибка при регистрации. Покажите эту ошибку администрации: ' + error);
+        password,
       });
+      if (response.status === 200) {
+        dispatch({
+          type: 'REGISTER',
+          payload: {
+            username: response.data.username,
+            email: email,
+          },
+        });
+      } else {
+        alert('Ошибка при регистрации. Покажите этот код администрации: ' + response.status);
+      }
+    } catch (error) {
+      alert('Ошибка при регистрации. Покажите эту ошибку администрации: ' + error);
+    }
   };
 };
 

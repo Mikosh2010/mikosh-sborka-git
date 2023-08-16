@@ -8,6 +8,8 @@ export const LOGOUT = 'LOGOUT';
 export const SET_REMEMBER_ME = 'SET_REMEMBER_ME';
 export const SET_EMAIL_CONFIRMED = 'SET_EMAIL_CONFIRMED';
 
+const API_BASE_URL = 'http://localhost:8080/api/users';
+
 const storedIsLoggedIn = Cookies.get('isLoggedIn') === 'true';
 const storedUsername = Cookies.get('username') || null;
 const storedRememberMe = Cookies.get('rememberMe') === 'true';
@@ -43,35 +45,41 @@ const authReducer = (state = initialState, action) => {
         ...state,
         error: action.payload.error,
       };
+
     case REGISTER:
-      axios
-        .get(`http://localhost:8080/api/users/isConfirmed?email=${action.payload.email}`)
-        .then((response) => {
+      return async (dispatch) => {
+        try {
+          const response = await axios.get(`${API_BASE_URL}/isConfirmed?email=${action.payload.email}`);
           if (response.data.confirmed) {
-            // User is confirmed, set isLoggedIn, username, and cookies
             Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
             Cookies.set('username', action.payload.username);
-            return {
-              ...state,
-              isLoggedIn: true,
-              username: action.payload.username,
-            };
+            dispatch({
+              type: 'LOGIN',
+              payload: {
+                username: action.payload.username,
+                loggedIn: true,
+              },
+            });
           } else {
-            // User is not confirmed, update state accordingly
-            return {
-              ...state,
-              isLoggedIn: false,
-              error: 'User is not confirmed.',
-            };
+            dispatch({
+              type: 'SET_EMAIL_CONFIRMED', // Добавьте это действие для установки флага подтверждения email
+              payload: false,
+            });
           }
-        })
-        .catch((error) => {
-          return {
-            ...state,
-            error: 'Error checking user confirmation.',
-          };
-        });
-      return state; // Возвращаем текущее состояние до завершения асинхронной операции      
+        } catch (error) {
+          dispatch({
+            type: 'LOGIN_FAILURE',
+            payload: {
+              error: 'Error checking user confirmation.',
+            },
+          });
+        }
+      };
+    case SET_EMAIL_CONFIRMED:
+      return {
+        ...state,
+        isEmailConfirmed: action.payload,
+      };
     case LOGOUT:
       Cookies.remove('isLoggedIn');
       Cookies.remove('username');
