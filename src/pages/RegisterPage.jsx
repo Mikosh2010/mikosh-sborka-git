@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ScrollReveal from 'scrollreveal';
 import { motion } from 'framer-motion';
 import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { register } from '../actions/authActions'
 import RegisterImage from '../img/register-image.jpg';
 import './UI/RegisterPage.css';
 import ConfirmModal from '../components/ConfirmModal';
@@ -36,6 +37,8 @@ const RegisterPage = ({ isLoggedIn }) => {
         });
     }, []);
 
+    const dispatch = useDispatch();
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -48,6 +51,8 @@ const RegisterPage = ({ isLoggedIn }) => {
     const [isNameValid, setNameValid] = useState(false);
     const [isRepeatValid, setRepeatValid] = useState(false);
     const [isPasswordValid, setPasswordValid] = useState(false);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -72,12 +77,18 @@ const RegisterPage = ({ isLoggedIn }) => {
             e.preventDefault();
             if (!isEmailValid || !isNameValid || !isPasswordValid || !isRepeatValid) {
                 return;
-            }
+            };
+
+            setIsLoading(true);
+
+            dispatch(register(username, email, password));
+        
+            setIsLoading(false);
             
             // Показать попап ConfirmModal
             setShowConfirmModal(true);
         },
-        [isEmailValid, isNameValid, isPasswordValid, isRepeatValid]
+        [isEmailValid, isNameValid, isPasswordValid, isRepeatValid, username, password, email, dispatch]
     );
 
     return (
@@ -169,7 +180,9 @@ const RegisterPage = ({ isLoggedIn }) => {
                                     <i className={attrRepeat ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttrRepeat(!attrRepeat)}></i>
                                 </div>
                             </div>
-                            <button className="register__button" disabled={!(isEmailValid && isNameValid && isPasswordValid && isRepeatValid)}>Зарегистрироваться</button>
+                            <button className="register__button" disabled={!(isEmailValid && isNameValid && isPasswordValid && isRepeatValid)}>
+                                {isLoading ? <span className="loader"></span> : 'Зарегистрироваться'}
+                            </button>
                             <div className="register__to-login">У вас уже есть аккаунт? <Link to="/login">Авторизуйтесь</Link></div>
                         </form>
                     </div>
@@ -183,4 +196,8 @@ const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(RegisterPage);
+const mapDispatchToProps = {
+    register,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
