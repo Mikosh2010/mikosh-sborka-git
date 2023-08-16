@@ -7,6 +7,8 @@ export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
 export const SET_REMEMBER_ME = 'SET_REMEMBER_ME';
 export const SET_EMAIL_CONFIRMED = 'SET_EMAIL_CONFIRMED';
+export const SHOW_ERROR_MODAL = 'SHOW_ERROR_MODAL';
+export const HIDE_ERROR_MODAL = 'HIDE_ERROR_MODAL';
 
 const API_BASE_URL = 'http://localhost:8080/api/users';
 
@@ -19,7 +21,11 @@ const initialState = {
   username: storedUsername,
   rememberMe: storedRememberMe,
   isEmailConfirmed: false,
-  error: null, // Добавьте это, чтобы гарантировать обнуление ошибки при загрузке страницы
+  error: null,
+  errorModal: {
+    active: false,
+    text: '',
+  }, // Добавьте это, чтобы гарантировать обнуление ошибки при загрузке страницы
 };
 
 const authReducer = (state = initialState, action) => {
@@ -45,11 +51,10 @@ const authReducer = (state = initialState, action) => {
         ...state,
         error: action.payload.error,
       };
-
     case REGISTER:
-      return async (dispatch) => {
+      return (dispatch) => {
         try {
-          const response = await axios.get(`${API_BASE_URL}/isConfirmed?email=${action.payload.email}`);
+          const response = axios.get(`${API_BASE_URL}/isConfirmed?email=${action.payload.email}`);
           if (response.data.confirmed) {
             Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
             Cookies.set('username', action.payload.username);
@@ -79,6 +84,22 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isEmailConfirmed: action.payload,
+      };
+    case SHOW_ERROR_MODAL:
+      return {
+        ...state,
+        errorModal: {
+          active: true,
+          text: action.payload.errorModal.text,
+        },
+      };
+    case HIDE_ERROR_MODAL:
+      return {
+        ...state,
+        errorModal: {
+          active: false,
+          text: '',
+        },
       };
     case LOGOUT:
       Cookies.remove('isLoggedIn');

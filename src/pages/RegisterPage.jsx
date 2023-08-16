@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ScrollReveal from 'scrollreveal';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, Navigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { register } from '../actions/authActions'
@@ -51,6 +51,7 @@ const RegisterPage = ({ isLoggedIn }) => {
     const [isNameValid, setNameValid] = useState(false);
     const [isRepeatValid, setRepeatValid] = useState(false);
     const [isPasswordValid, setPasswordValid] = useState(false);
+    const [registrationError, setRegistrationError] = useState(null);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -73,23 +74,34 @@ const RegisterPage = ({ isLoggedIn }) => {
     };
 
     const handleSubmit = useCallback(
-        (e) => {
+        async (e) => {
             e.preventDefault();
             if (!isEmailValid || !isNameValid || !isPasswordValid || !isRepeatValid) {
                 return;
-            };
-
+            }
+    
             setIsLoading(true);
-
-            dispatch(register(username, email, password));
-        
-            setIsLoading(false);
-            
-            // Показать попап ConfirmModal
-            setShowConfirmModal(true);
+    
+            try {
+                const response = await dispatch(register(username, email, password));
+    
+                if (response.error) {
+                    // Пришла ошибка с сервера
+                    setRegistrationError("Такой email уже существует.");
+                } else {
+                    // Успешная регистрация
+                    setShowConfirmModal(true);
+                }
+            } catch (error) {
+                console.error("Произошла ошибка:", error);
+                setRegistrationError("Такой email уже существует.");
+            } finally {
+                setIsLoading(false);
+            }
         },
         [isEmailValid, isNameValid, isPasswordValid, isRepeatValid, username, password, email, dispatch]
     );
+    
 
     return (
         <motion.div
@@ -98,9 +110,17 @@ const RegisterPage = ({ isLoggedIn }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
         >
-            {showConfirmModal && <ConfirmModal isEmailConfirmed={showConfirmModal}/>}
+            <AnimatePresence>
+                {showConfirmModal && (
+                    <ConfirmModal
+                        isEmailConfirmed={showConfirmModal}
+                        // You can also add exit animations here if needed
+                        exit={{ opacity: 0 }}
+                    />
+                )}
+            </AnimatePresence>
 
-            
+
             {isLoggedIn ? (
                 <Navigate to="/area" />
             ) : (
@@ -115,6 +135,7 @@ const RegisterPage = ({ isLoggedIn }) => {
                                 <h3 className="register__title">Создать аккаунт</h3>
                                 <h3 className="register__subtitle">Создайте свой первый аккаунт</h3>
                             </div>
+                            {registrationError && <p className="error-message email-repeat">{registrationError}</p>}    
                             <div className="register__inputs">
                                 <div className="input__box register__input-box">
                                     <input
@@ -138,7 +159,7 @@ const RegisterPage = ({ isLoggedIn }) => {
                                         placeholder='Введите ваш email'
                                         value={email}
                                         autoComplete='off'
-                                        className={!isEmailValid ? "invalid" : "valid"}
+                                        className={!isEmailValid && !registrationError ? "invalid" : "valid"}
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                             emailValid(e.target.value);
@@ -152,7 +173,7 @@ const RegisterPage = ({ isLoggedIn }) => {
                                         required
                                         name='password'
                                         placeholder='Придумайте пароль'
-                                        autoComplete='off'                                        
+                                        autoComplete='off'
                                         value={password}
                                         onChange={(e) => {
                                             setPassword(e.target.value);

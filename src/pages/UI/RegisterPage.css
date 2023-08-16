@@ -68,6 +68,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 25px;
 }
 
 .register__title {
@@ -79,11 +80,15 @@
     font-size: 16px;
 }
 
+.register__inputs {
+    display: grid;
+    grid-gap: 25px;
+}
+
 .register .input__box {
     background: none;
     position: relative;
     width: 380px;
-    margin-top: 25px;
 }
 
 .register .input__box input {
@@ -108,6 +113,13 @@
     color: #ee3030;
     font-size: 13px;
     font-weight: 550;
+}
+
+.register .email-repeat {
+    font-size: 15px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    text-align: left;
 }
 
 .valid {
@@ -194,8 +206,8 @@
 
 .register__button {
     width: 100%;
+    height: 50px;
     margin-top: 30px;
-    padding: 13px 0;
     background: #4f3456;
     border-radius: 7px;
     color: #fff;

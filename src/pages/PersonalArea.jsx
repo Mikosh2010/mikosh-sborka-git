@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-const PersonalArea = () => {
+const PersonalArea = ({ isLoggedIn, username }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -9,9 +11,20 @@ const PersonalArea = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
         >
-            Area
+            {isLoggedIn ? (
+                <>
+                Hello, {username}
+                </>
+            ) : (
+                <Navigate replace to="/"/>
+            )}
         </motion.div>
     );
-}
+};
 
-export default PersonalArea;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    username: state.auth.username,
+});
+
+export default connect(mapStateToProps)(PersonalArea);

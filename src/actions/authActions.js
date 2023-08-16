@@ -47,9 +47,11 @@ export const register = (username, email, password) => {
         email,
         password,
       });
+
       if (response.status === 200) {
+        // Dispatching action directly
         dispatch({
-          type: 'REGISTER',
+          type: 'REGISTER_SUCCESS',
           payload: {
             username: response.data.username,
             email: email,
@@ -67,14 +69,48 @@ export const register = (username, email, password) => {
             loggedIn: true,
           },
         });
+
+        // Возвращаем успешный response для обработки
+        return response;
       } else {
-        alert('Ошибка при регистрации. Покажите этот код администрации: ' + response.status);
+        // Dispatching action directly
+        dispatch({
+          type: 'REGISTER_FAILURE',
+          payload: {
+            errorModal: {
+              active: true,
+              text: 'Ошибка при регистрации. Покажите этот код администрации: ' + response.status,
+            },
+          },
+        });
+
+        // Возвращаем response для обработки ошибки
+        return response;
       }
     } catch (error) {
-      alert('Ошибка при регистрации. Покажите эту ошибку администрации: ' + error);
+      // Dispatching action directly
+      dispatch({
+        type: 'REGISTER_FAILURE',
+        payload: {
+          errorModal: {
+            active: true,
+            text: `
+            Ошибка при регистрации. Покажите эту ошибку администрации: 
+            
+            ${error}!
+
+            Также, если вы с компьютера, желательно нажать F12 и в вылезающем окне открыть Console (или Консоль), и также показать его администрации.
+            `,
+          },
+        },
+      });
+
+      // Возвращаем ошибку для обработки
+      throw error;
     }
   };
 };
+
 
 
 export const setEmailConfirmed = (value) => {
@@ -110,6 +146,13 @@ export const checkEmailConfirmation = (email) => {
     }
   };
 };
+
+export const hideErrorModal = () => {
+  return {
+    type: 'HIDE_ERROR_MODAL',
+  };
+};
+
 
 export const logout = () => {
   return {

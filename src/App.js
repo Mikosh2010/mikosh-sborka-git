@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import Time from './components/Time';
+import { connect } from 'react-redux'; // Импортируем функцию connect
+import ErrorModal from './components/ErrorModal';
 
 import { MainPage } from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
@@ -13,7 +15,7 @@ import PersonalArea from './pages/PersonalArea';
 import Product from './container/product/Product';
 import PageLoader from './components/PageLoader';
 
-function App() {
+function App({ errorModal }) {
 
   const location = useLocation();
   const [isPageLoading, setIsPageLoading] = useState(false);
@@ -105,7 +107,9 @@ function App() {
 
       modsImgSrc: "https://i.ibb.co/RcQyvBn/image.jpg",
     }
-  ] 
+  ]
+
+  console.log(errorModal);
 
   return (
     <div>
@@ -117,6 +121,8 @@ function App() {
       </Helmet>
 
       <Header />
+
+      {errorModal.active && <ErrorModal text={errorModal.text} />}
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -143,6 +149,12 @@ function App() {
       <Time />
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    errorModal: state.auth.errorModal, // Получаем состояние errorModal из Redux store
+  };
+};
+
+export default connect(mapStateToProps)(App);
