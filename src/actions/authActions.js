@@ -12,19 +12,30 @@ export const login = (username, password) => {
       .then((response) => {
         if (response.status === 200 && response.data.loggedIn) {
           dispatch({
-            type: 'LOGIN', // Используйте переменную LOGIN, определенную вверху файла
+            type: 'LOGIN',
             payload: {
               username: response.data.username,
               loggedIn: response.data.loggedIn,
             },
           });
         } else {
-          console.error('Ошибка при авторизации');
+          dispatch({
+            type: 'LOGIN_FAILURE',
+            payload: {
+              error: 'Неверный логин или пароль',
+            },
+          });
         }
       })
       .catch((error) => {
-      // Обработка ошибки
-    });
+        dispatch({
+          type: 'LOGIN_FAILURE',
+          payload: {
+            error: 'Неверный логин или пароль',
+          },
+        });
+        console.log(error);
+      });
   };
 };
 
@@ -44,12 +55,16 @@ export const register = (username, email, password) => {
               username: response.data.username,
             },
           });
+          dispatch({
+            type: 'SET_EMAIL_CONFIRMED',
+            payload: true,
+          });
         } else {
-          console.error('Ошибка при регистрации')
+          alert('Ошибка при регистрации ' + response + " Покажите этот код администрации.")
         }
       })
       .catch((error) => {
-        console.error('Ошибка при регистрации,', error);
+        alert('Ошибка при регистрации,' + error + "Покажите эту ошибку администрации.");
       });
   };
 };

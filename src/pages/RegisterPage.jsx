@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ScrollReveal from 'scrollreveal';
 import { motion } from 'framer-motion';
 import { Link, Navigate } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
-import { register } from '../actions/authActions';
-import './UI/RegisterPage.css'
+import { connect } from 'react-redux';
+import RegisterImage from '../img/register-image.jpg';
+import './UI/RegisterPage.css';
+import ConfirmModal from '../components/ConfirmModal';
 
 const RegisterPage = ({ isLoggedIn }) => {
-
     useEffect(() => {
         const sr = ScrollReveal();
 
@@ -40,25 +40,44 @@ const RegisterPage = ({ isLoggedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
+
     const [attr, setAttr] = useState(false);
     const [attrRepeat, setAttrRepeat] = useState(false);
-    const [emailValid, setEmailValid] = useState(false);
 
-    const handleEmailChange = (e) => {
-        const value = e.target.value;
-        setEmail(value);
-        // Пример валидации email с использованием регулярного выражения
-        setEmailValid(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu.test(value));
+    const [isEmailValid, setEmailValid] = useState(false);
+    const [isNameValid, setNameValid] = useState(false);
+    const [isRepeatValid, setRepeatValid] = useState(false);
+    const [isPasswordValid, setPasswordValid] = useState(false);
+
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+    const emailValid = (value) => {
+        setEmailValid(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value));
     };
 
-    const dispatch = useDispatch();
+    const handleNameChange = (value) => {
+        setNameValid(value.length >= 6 && value.length <= 18 && /^(?=.*[a-zA-Z])(?=.*\d?.*).+$/.test(value));
+    };
+
+    const handleRepeatChange = (value) => {
+        setRepeatValid(value === password);
+    };
+
+    const handlePasswordChange = (value) => {
+        setPasswordValid(value.length >= 8);
+    };
 
     const handleSubmit = useCallback(
         (e) => {
             e.preventDefault();
-            dispatch(register(username, email, password));
+            if (!isEmailValid || !isNameValid || !isPasswordValid || !isRepeatValid) {
+                return;
+            }
+            
+            // Показать попап ConfirmModal
+            setShowConfirmModal(true);
         },
-        [username, email, password, dispatch]
+        [isEmailValid, isNameValid, isPasswordValid, isRepeatValid]
     );
 
     return (
@@ -68,12 +87,15 @@ const RegisterPage = ({ isLoggedIn }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
         >
+            {showConfirmModal && <ConfirmModal isEmailConfirmed={showConfirmModal}/>}
+
+            
             {isLoggedIn ? (
-                <Navigate to="/" />
+                <Navigate to="/area" />
             ) : (
                 <div className="register">
                     <div className="register__content">
-                        <img src="https://i.imgur.com/Acblvqw.png" alt="" className="register__img" />
+                        <img src={RegisterImage} alt="" className="register__img" />
                         <form className="register__box" onSubmit={handleSubmit}>
                             <Link to="/" className="register__back">
                                 <i className="uil uil-arrow-left"></i> НА ГЛАВНУЮ
@@ -82,7 +104,6 @@ const RegisterPage = ({ isLoggedIn }) => {
                                 <h3 className="register__title">Создать аккаунт</h3>
                                 <h3 className="register__subtitle">Создайте свой первый аккаунт</h3>
                             </div>
-
                             <div className="register__inputs">
                                 <div className="input__box register__input-box">
                                     <input
@@ -91,19 +112,28 @@ const RegisterPage = ({ isLoggedIn }) => {
                                         placeholder='Введите ваше имя'
                                         autoComplete='off'
                                         value={username}
-                                        onChange={e => setUsername(e.target.value)}
+                                        onChange={(e) => {
+                                            setUsername(e.target.value);
+                                            handleNameChange(e.target.value);
+                                        }}
+                                        className={!isNameValid ? "invalid" : "valid"}
                                     />
+                                    {!isNameValid && <p className="error-message invalid-text">Имя должно быть длиной от 6 до 18 символов</p>}
                                 </div>
                                 <div className="input__box email__input-box">
-                                    <div className={emailValid ? "email__valid-text" : "email__valid-text invalid-email"}>Неправильный формат Email, формат должен совпадать с <strong>user@user.ru</strong></div>
                                     <input
                                         type="email"
                                         required
                                         placeholder='Введите ваш email'
                                         value={email}
-                                        onChange={handleEmailChange}
-                                        className={emailValid ? "valid" : "invalid"}
+                                        autoComplete='off'
+                                        className={!isEmailValid ? "invalid" : "valid"}
+                                        onChange={(e) => {
+                                            setEmail(e.target.value);
+                                            emailValid(e.target.value);
+                                        }}
                                     />
+                                    {!isEmailValid && <p className="error-message invalid-text">Пожалуйста, введите корректный email</p>}
                                 </div>
                                 <div className="input__box pass-input__box">
                                     <input
@@ -111,23 +141,35 @@ const RegisterPage = ({ isLoggedIn }) => {
                                         required
                                         name='password'
                                         placeholder='Придумайте пароль'
+                                        autoComplete='off'                                        
                                         value={password}
-                                        onChange={e => setPassword(e.target.value)}
+                                        onChange={(e) => {
+                                            setPassword(e.target.value);
+                                            handlePasswordChange(e.target.value);
+                                        }}
+                                        className={!isPasswordValid ? "invalid" : "valid"}
                                     />
                                     <i className={attr ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttr(!attr)}></i>
+                                    {!isPasswordValid && <p className="error-message invalid-text">Пароль должен быть длиной от 8 символов</p>}
                                 </div>
                                 <div className="input__box pass-repeat__input-box">
                                     <input
                                         type={attrRepeat ? "text" : "password"}
-                                        required name='repeat-password'
+                                        required
+                                        name='repeat-password'
                                         placeholder='Повторите пароль'
                                         value={repeatPassword}
-                                        onChange={e => setRepeatPassword(e.target.value)}
+                                        onChange={(e) => {
+                                            setRepeatPassword(e.target.value);
+                                            handleRepeatChange(e.target.value);
+                                        }}
+                                        className={!isRepeatValid ? "invalid" : "valid"}
                                     />
+                                    {!isRepeatValid && <p className="error-message invalid-text">Пароли не совпадают!</p>}
                                     <i className={attrRepeat ? "ri-eye-off-line pass__show" : "ri-eye-line pass__show"} onClick={() => setAttrRepeat(!attrRepeat)}></i>
                                 </div>
                             </div>
-                            <button className="register__button">Зарегистрироваться</button>
+                            <button className="register__button" disabled={!(isEmailValid && isNameValid && isPasswordValid && isRepeatValid)}>Зарегистрироваться</button>
                             <div className="register__to-login">У вас уже есть аккаунт? <Link to="/login">Авторизуйтесь</Link></div>
                         </form>
                     </div>

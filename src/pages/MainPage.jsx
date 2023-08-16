@@ -7,6 +7,7 @@ import Section from '../components/Section';
 import Footer from '../components/Footer';
 import ScrollReveal from 'scrollreveal';
 import Mods from '../components/Mods';
+import Intro from '../components/Intro';
 
 
 const MainPage = ({products}) => {
@@ -22,7 +23,7 @@ const MainPage = ({products}) => {
         origin: 'left',
         interval: 150,
     });
-    sr.reveal('.contacts__button, .section__title, .section__subtitle, .section__desc, .Mods_mods__item__6oWnW', {
+    sr.reveal('.contacts__button, .section__title, .section__subtitle, .section__desc', {
         duration: 1500,
         distance: '30px',
         delay: 200,
@@ -46,7 +47,7 @@ const MainPage = ({products}) => {
         origin: 'bottom',
         interval: 150,
     });
-    sr.reveal('.intro__image, .about__image, .footer__header .nav__item', {
+    sr.reveal('.intro__image, .footer__header .nav__item', {
         duration: 2000,
         distance: '40px',
         delay: 1000,
@@ -64,36 +65,9 @@ const MainPage = ({products}) => {
             transition={{ duration: 1.5 }}
         >
             <main className="main">
-                {/* Intro */}
-                <section className="intro" id="intro">
-                    <div className="header__image">
-                        <img src="https://i.ibb.co/NmR8ZTS/logo.png" alt="" />
-                    </div>
-                    <div className="intro__wrapper">
-                        <div className="intro__content revealleft-item">
-                            <h1 className="intro__title">MIKOSH SBORKA</h1>
-                            <h3 className="intro__subtitle">
-                                Платформа по созданию модификаций (сборок) для игры в RADMIR
-                                CRMP.
-                            </h3>
-                            <p className="intro__desc">
-                                Наши модификации представляют: уникальные интерфейсы, и полезные
-                                скрипты которые обеспечивают приятную и удобную игру в RADMIR
-                                CRMP.
-                            </p>
-                            <a href="#mods" className="intro__button">
-                                Купить сборку
-                            </a>
-                        </div>
-                        <div className="intro__image">
-                            <img
-                                src="https://i.imgur.com/MowuLSh.png"
-                                alt=""
-                                className="intro__img"
-                            />
-                        </div>
-                    </div>
-                </section>
+                
+                <Intro />
+
                 {/* About */}
                 <section className="about" id="about">
                     <div className="about__inner">

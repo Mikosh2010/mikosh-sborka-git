@@ -1,49 +1,67 @@
 import Cookies from 'js-cookie';
 
-// Определите новые типы действий (если они не определены в другом месте)
 export const LOGIN = 'LOGIN';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
 export const SET_REMEMBER_ME = 'SET_REMEMBER_ME';
+export const SET_EMAIL_CONFIRMED = 'SET_EMAIL_CONFIRMED';
+
+const storedIsLoggedIn = Cookies.get('isLoggedIn') === 'true';
+const storedUsername = Cookies.get('username') || null;
+const storedRememberMe = Cookies.get('rememberMe') === 'true';
 
 const initialState = {
-  isLoggedIn: Cookies.get('isLoggedIn') === 'true',
-  username: Cookies.get('username') || null, // Считываем username из куки при загрузке страницы
-  rememberMe: false, // Добавьте новое поле для отслеживания состояния чекбокса
+  isLoggedIn: storedIsLoggedIn,
+  username: storedUsername,
+  rememberMe: storedRememberMe,
+  isEmailConfirmed: false,
+  error: null, // Добавьте это, чтобы гарантировать обнуление ошибки при загрузке страницы
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      // Здесь можно добавить запрос к серверу для проверки логина и пароля
-      // Предположим, что сервер возвращает объект с полями loggedIn и username
       if (action.payload.loggedIn) {
-        
-        Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 }); // Установите время действия cookies в 1 день или 1 год, в зависимости от rememberMe
-        Cookies.set('username', action.payload.username); // Сохраняем username в куку
+        Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
+        Cookies.set('username', action.payload.username);
         return {
           ...state,
           isLoggedIn: true,
           username: action.payload.username,
+          error: null,
         };
       } else {
-        return state;
+        return {
+          ...state,
+          error: action.payload.error,
+        };
       }
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
     case REGISTER:
-      // Здесь также можно добавить запрос к серверу для регистрации нового пользователя
-      Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 }); // Установите время действия cookies в 1 день или 1 год, в зависимости от rememberMe
-      Cookies.set('username', action.payload.username); // Сохраняем username в куку
+      Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
+      Cookies.set('username', action.payload.username);
       return {
         ...state,
         isLoggedIn: true,
         username: action.payload.username,
       };
+    case SET_EMAIL_CONFIRMED:
+      return {
+        ...state,
+        isEmailConfirmed: action.payload,
+      };
     case LOGOUT:
-      Cookies.remove('isLoggedIn'); // Удаляем куку isLoggedIn при выходе
-      Cookies.remove('username'); // Удаляем куку username при выходе
-      return { ...initialState, rememberMe: state.rememberMe }; // Возвращаем начальное состояние с сохранением rememberMe
+      Cookies.remove('isLoggedIn');
+      Cookies.remove('username');
+      Cookies.remove('rememberMe');
+      return { ...state, isLoggedIn: false, username: null, rememberMe: state.rememberMe };
     case SET_REMEMBER_ME:
-      Cookies.set('rememberMe', action.payload); // Сохраните значение rememberMe в cookies
+      Cookies.set('rememberMe', action.payload);
       return {
         ...state,
         rememberMe: action.payload,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './UI/error.css';
+import './UI/productsError.css';
 
 const ProductsError = ({active, setActive}) => {
 

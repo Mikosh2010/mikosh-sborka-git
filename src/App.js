@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
@@ -11,8 +11,22 @@ import RegisterPage from './pages/RegisterPage';
 import { NotFound } from './pages/NotFound';
 import PersonalArea from './pages/PersonalArea';
 import Product from './container/product/Product';
+import PageLoader from './components/PageLoader';
 
 function App() {
+
+  const location = useLocation();
+  const [isPageLoading, setIsPageLoading] = useState(false);
+
+  useEffect(() => {
+    setIsPageLoading(true);
+    const timeout = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 500); // Настройте время показа лоадера
+    return () => clearTimeout(timeout);
+  }, [location]);
+
+  const isHashRoute = location.pathname.startsWith("#") || location.hash;
 
   const products = [
     {
@@ -125,6 +139,7 @@ function App() {
           </Routes>
         </motion.div>
       </AnimatePresence>
+      {isPageLoading && !isHashRoute ? <PageLoader show={true}/> : <PageLoader show={false}/>}
       <Time />
     </div>
   );

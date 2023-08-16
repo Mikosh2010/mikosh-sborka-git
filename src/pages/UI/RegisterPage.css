@@ -1,5 +1,5 @@
-input:-webkit-autofill, 
-input:-webkit-autofill:focus {
+.register input:-webkit-autofill, 
+.register input:-webkit-autofill:focus {
     border: 10px solid #413047 !important;
     -webkit-text-fill-color: #fff;
     caret-color: #fff;
@@ -8,13 +8,12 @@ input:-webkit-autofill:focus {
 }
 
 .register {
-    margin-top: 2rem;
+    padding-top: 6vh;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
 }
 
 .register__main-title {
@@ -31,7 +30,7 @@ input:-webkit-autofill:focus {
 
 .register__img {
     width: 575px;
-    height: 550px;
+    height: auto;
 }
 
 .register__back {
@@ -56,9 +55,8 @@ input:-webkit-autofill:focus {
 }
 
 .register__box {
-    height: 550px;
     background: rgba(88, 59, 95, .3);
-    padding: 0px 65px;
+    padding: 35px 65px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -89,20 +87,44 @@ input:-webkit-autofill:focus {
 }
 
 .register .input__box input {
-    height: 43px;
+    height: 50px;
     width: 100%;
     position: relative;
     z-index: 10;
     border: none;
     outline: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: #fff;
     padding: 0 0 0 20px;
+    font-size: 15px;
     background: #413047;
+}
+
+.invalid-text {
+    margin-top: 5px;
+}
+
+.register .error-message {
+    color: #ee3030;
+    font-size: 13px;
+    font-weight: 550;
+}
+
+.valid {
+    border: 1px solid #20df43 !important;
+    padding: 0 0 0 20px !important;
+    transition: border .9s;
+}
+
+.invalid {
+    border: 1px solid #df2020 !important;
+    padding: 0 0 0 20px !important;
+    transition: border .9s;
 }
 
 .register .input__box input::placeholder {
     color: #fff;
+    font-size: 14px;
 }
 
 .register .pass__input-box input {
@@ -113,7 +135,6 @@ input:-webkit-autofill:focus {
 .register .pass__input-box .register .input__text {
     padding: 20px 0;
 }
-
 
 .register .input__text {
     font-size: 16px;
@@ -136,7 +157,7 @@ input:-webkit-autofill:focus {
     font-size: 20px;
     position: absolute;
     right: 15px;
-    top: 12px;
+    top: 15px;
     z-index: 100;
     color: #fff;
     cursor: pointer;
@@ -176,14 +197,26 @@ input:-webkit-autofill:focus {
     margin-top: 30px;
     padding: 13px 0;
     background: #4f3456;
-    border-radius: 10px;
+    border-radius: 7px;
     color: #fff;
     border: 0;
     outline: none;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     transition-duration: .25s;
+}
+
+.register__button:disabled {
+    background: #f4f1e11a;
+    color: #f4f1e140;
+    cursor: not-allowed;
+}
+
+.register__button:disabled:hover {
+    background: #f4f1e11a;
+    color: #f4f1e140;
+    opacity: 1;
 }
 
 .register__button:hover {
@@ -211,7 +244,6 @@ input:-webkit-autofill:focus {
     }
     .register__box {
         width: 90vw;
-        height: 510px;
     }
     .register__inputs, .register__links, .register__button {
         width: 100%;
@@ -246,9 +278,6 @@ input:-webkit-autofill:focus {
     }
     .register__inputs {
         width: 100%;
-    }
-    .register .input__box {
-        margin-bottom: 30px;
     }
     .register__head {
         align-items: flex-start;

@@ -108,89 +108,6 @@ main {
     font-size: 16px;
 }
 
-/* Intro */
-
-.intro {
-    height: 850px;
-    background: url("https://i.imgur.com/VpeWKgF.jpg") center no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-}
-
-.header__image {
-    display: none;
-    width: 100%;
-    justify-content: center;
-    position: absolute;
-    top: 15px;
-    padding-bottom: 13px;
-    border-bottom: 1px solid #4e3c5a;
-}
-
-.header__image img {
-    width: 150px;
-}
-
-.intro__wrapper {
-    padding-left: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.intro__content {
-    position: relative;
-    z-index: 10;
-    margin-right: 100px;
-}
-
-.intro__welcome {
-    font-size: 20px;
-}
-
-.intro__title {
-    font-size: 80px;
-    font-weight: 700;
-}
-
-.intro__subtitle {
-    font-weight: 600;
-    font-size: 20px;
-    margin: 0 auto 15px;
-    padding-left: 4px;
-}
-
-.intro__desc {
-    margin-bottom: 70px;
-    max-width: 670px;
-    color: rgba(255, 255, 255, .6);
-    padding-left: 4px;
-}
-
-.intro__button {
-    background-color: #583B5F;
-    border-radius: 7px;
-    color: #fff;
-    padding: 15px 35px;
-    margin-left: 5px;
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: 600;
-    transition-duration: .25s;
-}
-
-.intro__button:hover {
-    background-color: #bba9cb;
-    color: #000000;
-}
-
-.intro__image {
-    width: 500px;
-}
-
 .about {
     height: 500px;
     display: flex;
@@ -235,7 +152,7 @@ main {
 
 .mods {
     height: auto;
-    background: url(https://i.imgur.com/EFTlnxX.jpg) center no-repeat;
+    background: url("https://i.imgur.com/EFTlnxX.jpg") center no-repeat;
     background-size: cover;
 }
 
@@ -409,48 +326,6 @@ main {
 
 /* Adaptation */
 
-@media screen and (max-width: 1300px) {
-
-    /* Intro */
-    .intro__wrapper {
-        padding-left: 50px;
-    }
-
-    .intro__title {
-        font-size: 75px;
-    }
-}
-
-@media screen and (max-width: 1255px) {
-
-    /* Intro */
-    .intro__title {
-        font-size: 70px;
-    }
-}
-
-@media screen and (max-width: 1180px) {
-
-    /* Intro */
-    .intro__wrapper {
-        display: flex;
-        justify-content: center;
-        padding-left: 0;
-    }
-
-    .intro__content {
-        margin-right: 0;
-    }
-
-    .intro__title {
-        font-size: 75px;
-    }
-
-    .intro__image {
-        display: none;
-    }
-}
-
 @media screen and (max-width: 1140px) {
 
     /* About */
@@ -469,47 +344,6 @@ main {
 }
 
 @media screen and (max-width: 1000px) {
-
-    /* Intro */
-    .header__image {
-        display: flex !important;
-    }
-
-    .intro__title {
-        margin-top: 0;
-        font-size: 75px;
-    }
-
-    .intro__subtitle {
-        font-size: 16px;
-        margin: 20px auto 5px;
-    }
-
-    .intro__desc {
-        max-width: 720px;
-    }
-
-    .intro__image {
-        display: none;
-    }
-
-    .intro__wrapper {
-        padding: 0;
-        justify-content: center;
-    }
-
-    .intro__content {
-        text-align: center;
-    }
-
-    .intro__button {
-        width: 220px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 15px 0;
-    }
 
     /* About */
     .about {
@@ -572,58 +406,14 @@ main {
 
 @media screen and (max-width: 767px) {
 
-    /* Intro */
-    .intro__title {
-        font-size: 65px;
-        margin-bottom: 0;
-    }
-
-    .intro__subtitle {
-        font-size: 16px;
-    }
-
-    .intro__desc {
-        max-width: 525px;
-        margin: 0 auto 50px;
-        font-size: 14px;
-    }
-
     /* Mods */
     .mods__content {
         padding: 0 50px 50px;
     }
 }
 
-@media screen and (max-width: 650px) {
-
-    /* Intro */
-    .intro__title {
-        font-size: 60px;
-    }
-}
-
 
 @media screen and (max-width: 600px) {
-
-    /* Intro */
-    .intro__title {
-        font-size: 50px;
-    }
-
-    .intro__subtitle {
-        font-size: 14px;
-        max-width: 550px;
-        margin: 0 auto 20px;
-    }
-
-    .intro__desc {
-        font-size: 13px;
-    }
-
-    .intro__button {
-        width: 200px;
-        padding: 10px 0;
-    }
 
     /* Mods */
     .mods__content {
@@ -675,19 +465,6 @@ main {
         margin-right: 0;
     }
 
-    /* Intro */
-    .intro__title {
-        font-size: 45px;
-    }
-
-    .intro__subtitle {
-        padding: 0 30px;
-    }
-
-    .intro__desc {
-        max-width: 400px;
-    }
-
     /* About */
     .about__desc {
         font-size: 14px;
@@ -715,62 +492,11 @@ main {
     }
 }
 
-@media screen and (max-width: 430px) {
-    .intro__title {
-        font-size: 40px;
-    }
-
-    .intro__desc {
-        max-width: 390px;
-    }
-}
-
 @media screen and (max-width: 400px) {
 
     /* Section */
     .section__title {
         padding: 0 15px;
-    }
-
-    /* Intro */
-    .header__image {
-        top: 15px;
-    }
-
-    .intro__wrapper {
-        flex-direction: column;
-        margin-top: 80px;
-    }
-
-    .intro__title {
-        font-size: 33px;
-    }
-
-    .intro__subtitle {
-        font-size: 12.5px;
-        padding: 0 20px;
-        margin: 5px auto 40px;
-    }
-
-    .intro__desc {
-        display: none;
-    }
-
-    .intro__button {
-        padding: 10px 25px;
-        font-size: 14px;
-    }
-
-    .intro__image {
-        display: block;
-        margin-top: 30px;
-        width: 250px;
-        position: initial;
-    }
-
-    /* About */
-    .about__content {
-        margin: 50px 10px;
     }
 
     /* Questions */
@@ -810,33 +536,6 @@ main {
         padding: 0px 24px;
     }
 
-    /* Intro */
-    .intro {
-        height: auto !important;
-    }
-
-    .intro__wrapper {
-        margin-top: 0;
-    }
-
-    .intro__title {
-        margin-top: 200px !important;
-        font-size: 30px;
-        text-align: center;
-    }
-
-    .intro__subtitle {
-        text-align: center;
-        font-size: 12px;
-        padding: 0 20px;
-        font-weight: 400;
-    }
-
-    .intro__image {
-        width: 200px;
-        margin-top: 50px;
-    }
-
     /* Questions */
     .questions__header {
         font-size: 10px;
@@ -848,18 +547,5 @@ main {
 
     .section__title {
         font-size: 25px;
-    }
-
-    .intro__title {
-        font-size: 25px;
-    }
-
-    .intro__subtitle {
-        font-size: 10px;
-        text-align: center;
-    }
-
-    .intro__button {
-        width: 180px;
     }
 }

@@ -85,14 +85,14 @@ function Header({username, isLoggedIn}) {
                         <a href="/#contacts" className="nav__item" onClick={() => setNavActive(!navActive)}>
                             <i className="uil uil-message nav__icon"></i><div className="nav__link">Контакты</div>
                         </a>
-                        <div className={isLoggedIn ? "nav__profile" : "nav__profile profileNone"} onClick={() => setNavProfile  (!navProfile)}>
+                        <div className={isLoggedIn ? "nav__profile" : "nav__profile profileNone"} onClick={() => setNavProfile(!navProfile)}>
                             <i className="fa-solid fa-circle-user"></i> <span>{username}</span>
                         </div>
                         <div className={isLoggedIn ? "nav__account accountNone" : "nav__account"}>
-                            <NavLink to="/login" className="login__link">
+                            <NavLink to="/login" className="login__link" onClick={() => setNavActive(!navActive)}>
                                 <div className="nav__link">Войти</div>
                             </NavLink>
-                            <NavLink to="/register" className="register__link">
+                            <NavLink to="/register" className="register__link" onClick={() => setNavActive(!navActive)}>
                                 <div className="nav__link">Регистрация</div>
                             </NavLink>
                         </div>

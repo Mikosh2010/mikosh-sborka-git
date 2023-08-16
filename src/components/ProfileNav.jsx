@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { logout } from '../actions/authActions';
 import './UI/ProfileNav.css';
 
@@ -12,19 +12,27 @@ const ProfileNav = ({ profileActive, setProfileActive, username, balance, logout
         }
       }, [isLoggedIn, setProfileActive]);
 
-      useEffect(() => {
+    useEffect(() => {
+        // Close on esc
         const handleEscapeKey = (event) => {
-            if (event.keyCode === 27) { // 'Escape' key code is 27
+            if (event.keyCode === 27) {
                 setProfileActive(false);
             }
         };
         window.addEventListener('keydown', handleEscapeKey);
-        
+
         // Cleanup the event listener when the component unmounts
         return () => {
             window.removeEventListener('keydown', handleEscapeKey);
         };
     }, [setProfileActive]);
+
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout()); // Вызываем logout синхронно
+        setProfileActive(false); // Закрываем профиль
+    };
 
     return isLoggedIn ? (
         <div className={profileActive ? "profile active" : "profile"} onClick={() => setProfileActive(false)}>
@@ -43,17 +51,17 @@ const ProfileNav = ({ profileActive, setProfileActive, username, balance, logout
                 </div>
 
                 <nav className="profile__nav">
-                    <ui className="profile__nav-list">
+                    <ul className="profile__nav-list">
                         <li className="profile__item profile__area">
                             <i className="ri-shield-user-line profile__icon"></i> <Link to="/area" className="profile__link" onClick={() => setProfileActive(false)}>Личный кабинет</Link>
                         </li>
 
                         <div className="profile__content">
                             <li className="profile__item">
-                                <i className="uil uil-pen profile__icon"></i> <Link to="/area/changeProfile" className="profile__link" onClick={() => setProfileActive(false)}>Редактировать профиль</Link>
+                                <i className="ri-home-4-line profile__icon"></i> <Link to="/" className="profile__link" onClick={() => setProfileActive(false)}>Главная</Link>
                             </li>
                             <li className="profile__item">
-                                <i className="ri-home-4-line profile__icon"></i> <Link to="/" className="profile__link" onClick={() => setProfileActive(false)}>Главная</Link>
+                                <i className="uil uil-pen profile__icon"></i> <Link to="/area/changeProfile" className="profile__link" onClick={() => setProfileActive(false)}>Редактировать профиль</Link>
                             </li>
                             <li className="profile__item profile__replenish">
                                 <i className="uil uil-usd-circle profile__icon"></i> <Link to="/balance" className="profile__link" onClick={() => setProfileActive(false)}>Пополнить баланс</Link>
@@ -75,18 +83,15 @@ const ProfileNav = ({ profileActive, setProfileActive, username, balance, logout
                             </li>
                         </div>
 
-                        <div className="profile__item profile__leave" onClick={() => setProfileActive(false)}>
-                            <i className="uil uil-signout profile__icon"></i> <button onClick={logout}>Выйти</button>
+                        <div className="profile__item profile__leave">
+                          <i className="uil uil-signout profile__icon"></i> <button onClick={handleLogout}>Выйти</button>
                         </div>
 
-                    </ui>
+                    </ul>
                 </nav>
             </div>
         </div>
-    ) : (
-        <>
-        </>
-    )
+    ) : null;
 }
 
 const mapStateToProps = (state) => ({

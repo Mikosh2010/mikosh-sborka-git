@@ -99,26 +99,11 @@
 }
 
 .profileNone {
-    display: none;
+    display: none !important;
 }
 
 .accountNone {
-    display: none;
-}
-
-.personal-area {
-    border-left: 1px solid #fff;
-    padding-left: 15px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: #fff;
-    font-size: 17px;
-    transition: .3s all;
-}
-
-.personal-area:hover {
-    color: #D48EFF;
+    display: none !important;
 }
 
 .login__link {
@@ -167,10 +152,6 @@
 .nav__area-icon {
     font-size: 20px;
     margin-right: 7px;
-}
-
-.personal-area .nav__item::before {
-    content: none;
 }
 
 .nav__btns {
@@ -297,14 +278,36 @@
     .login__link {
         font-size: 15px;
         padding: 10px 0;
-        margin-right: -60%;
     }
 
     .register__link {
         font-size: 15px;
         padding: 10px 0;
-        margin-left: 52%;
-        margin-right: -113%;
+    }
+
+    .nav__account {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column: 1 / span 3;
+    }
+
+    .nav__profile {
+        flex-direction: column;
+        grid-column: 2 / 3;
+        border-top: 1px solid #fff;
+        border-left: 0;
+        padding-top: 35px;
+        padding-left: 0;
+        gap: 5px;
+    }
+
+    .nav__profile i {
+        font-size: 20px;
+    }
+
+    .nav__profile span {
+        font-size: 16px;
     }
 
     .nav__logo,
@@ -328,18 +331,10 @@
     .nav__list {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .personal-area {
-        width: 210%;
-    }
     .login__link {
-        margin-left: 0;
-        margin-right: -10px;
         font-size: 13px;
     }
     .register__link {
-        margin-left: -10px;
-        margin-right: 0;
         font-size: 13px;
     }
 }

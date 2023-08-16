@@ -8,7 +8,7 @@ import inactiveStar from './img/rating-star-inactive.svg';
 import ProductsError from './productsError';
 import { NotFound } from '../../pages/NotFound';
 
-const Products = ({ products }) => {
+const Product = ({ products }) => {
 
     useEffect(() => {
         const sr = ScrollReveal();
@@ -124,4 +124,4 @@ const Products = ({ products }) => {
     );
 }
 
-export default Products;
+export default Product;

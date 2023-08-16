@@ -3,11 +3,10 @@ import ScrollReveal from 'scrollreveal';
 import { Navigate, Link } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
-import { login, logout, setRememberMe } from '../actions/authActions';
+import { login, setRememberMe } from '../actions/authActions';
 import './UI/LoginPage.css';
 
-const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
-
+const LoginForm = ({ isLoggedIn, login, rememberMe, error }) => {
   useEffect(() => {
     const sr = ScrollReveal();
 
@@ -56,13 +55,22 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [attr, setAttr] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const onSubmit = useCallback(
-    (e) => {
+  const handleSubmit = useCallback(
+    async (e) => {
       e.preventDefault();
-      login(username, password);
+      setIsLoading(true);
+  
+      try {
+        await login(username, password);
+      } catch (error) {
+        console.log(error);
+      }
+  
+      setIsLoading(false);
     },
     [username, password, login]
   );
@@ -72,7 +80,9 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
   };
 
   useEffect(() => {
-    setUsername(isLoggedIn ? isLoggedIn.username : '');
+    if (isLoggedIn) {
+      setUsername(isLoggedIn.username || '');
+    }
   }, [isLoggedIn]);
 
   return (
@@ -83,27 +93,29 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
       transition={{ duration: 1 }}
     >
       {isLoggedIn ? (
-        <Navigate to="/" />
+        <Navigate to="/area" />
       ) : (
         <div className="login">
           <div className="login__content">
             <img src="https://i.imgur.com/Acblvqw.png" alt="" className="login__img" />
-            <form className="login__box" onSubmit={onSubmit}>
+            <form className="login__box" onSubmit={handleSubmit}>
               <div className="login__head">
                 <h3 className="login__title">Войти</h3>
                 <h3 className="login__subtitle">Вход в свой аккаунт</h3>
               </div>
-
               <div className="login__inputs">
                 <div className="input__box login__input-box">
+                  {error && <p className="error-message">{error}</p>}
                   <input
                     type="text"
                     required
                     placeholder='Введите логин'
                     autoComplete='off'
                     value={username}
+                    className={error ? "invalid" : ""}
                     onChange={(e) => setUsername(e.target.value)}
                   />
+
                 </div>
                 <div className="input__box pass-input__box">
                   <input
@@ -112,6 +124,7 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
                     placeholder='Введите пароль'
                     autoComplete='off'
                     value={password}
+                    className={error ? "invalid" : ""}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <i
@@ -137,8 +150,8 @@ const LoginForm = ({ isLoggedIn, login, rememberMe }) => {
                   </Link>
                 </div>
               </div>
-              <button className="login__button" type="submit">
-                Войти
+              <button className="login__button" type="submit" disabled={isLoading}>
+                {isLoading ? <span className="loader"></span> : 'Войти'}
               </button>
               <div className="login__to-register">
                 Вы здесь впервые? <Link to="/register">Зарегистрируйтесь</Link>
@@ -155,11 +168,11 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isLoggedIn,
   username: state.auth.username,
   rememberMe: state.auth.rememberMe,
+  error: state.auth.error,
 });
 
 const mapDispatchToProps = {
   login,
-  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

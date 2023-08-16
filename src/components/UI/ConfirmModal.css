@@ -1,0 +1,121 @@
+.confirm {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: .2s ease-in-out;
+}
+
+.confirm.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.confirm__wrapper.active {
+    transform: scale(1);
+    opacity: 1;
+    transition: .2s ease-in-out;
+}
+
+.confirm__wrapper.active .confirm__icon {
+    top: -45px;
+    transition: .2s ease-in-out;
+}
+
+.confirm__wrapper {
+    width: 370px;
+    height: 350px;
+    background: #ffffff;
+    color: #000;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+
+    opacity: 0;
+    transform: scale(.9);
+    transition: .2s ease-in-out;
+}
+
+.confirm__icon {
+    position: absolute;
+    top: -80px;
+    z-index: 100;
+    font-size: 80px;
+    color: #ffffff;
+    background: #33e056;
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 0 15px 0 #00000036;
+    transition: .2s ease-in-out;
+}
+
+.confirm__title {
+    margin-top: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.confirm__subtitle {
+    font-size: 16px;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.confirm__desc {
+    font-size: 14px;
+    max-width: 300px;
+    font-weight: 500;
+}
+
+
+.confirm__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: #3232e8;
+    margin-top: 30px;
+    border-radius: 10px;
+    color: #fff;
+    padding: 13px 40px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition-duration: .25s;
+}
+
+.confirm__button:hover {
+    background-color: hsl(240, 80%, 45%);
+    color: #ffffff;
+}
+
+@media screen and (max-width: 450px) {
+    .confirm__wrapper.active {
+        transform: scale(.8);
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .confirm__title {
+        font-size: 24px;
+    }
+    .confirm__subtitle {
+        font-size: 15px;
+    }
+    .confirm__desc {
+        max-width: 250px;
+    }
+}
