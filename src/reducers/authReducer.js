@@ -9,23 +9,21 @@ export const SET_REMEMBER_ME = 'SET_REMEMBER_ME';
 export const SET_EMAIL_CONFIRMED = 'SET_EMAIL_CONFIRMED';
 export const SHOW_ERROR_MODAL = 'SHOW_ERROR_MODAL';
 export const HIDE_ERROR_MODAL = 'HIDE_ERROR_MODAL';
+export const SET_LOADING = 'SET_LOADING';
 
 const API_BASE_URL = 'http://localhost:8080/api/users';
 
-const storedIsLoggedIn = Cookies.get('isLoggedIn') === 'true';
-const storedUsername = Cookies.get('username') || null;
-const storedRememberMe = Cookies.get('rememberMe') === 'true';
-
 const initialState = {
-  isLoggedIn: storedIsLoggedIn,
-  username: storedUsername,
-  rememberMe: storedRememberMe,
+  isLoggedIn: Cookies.get('isLoggedIn') === 'true',
+  username: Cookies.get('username') || null,
+  rememberMe: Cookies.get('rememberMe') === 'true',
   isEmailConfirmed: false,
   error: null,
   errorModal: {
     active: false,
     text: '',
-  }, // Добавьте это, чтобы гарантировать обнуление ошибки при загрузке страницы
+  },
+  isLoading: false, // Добавьте это, чтобы гарантировать обнуление ошибки при загрузке страницы
 };
 
 const authReducer = (state = initialState, action) => {
@@ -44,12 +42,19 @@ const authReducer = (state = initialState, action) => {
         return {
           ...state,
           error: action.payload.error,
+          isLoading: false, // Установка isLoading в false при ошибке
         };
       }
     case LOGIN_FAILURE:
       return {
         ...state,
         error: action.payload.error,
+        isLoading: false, // Установка isLoading в false при ошибке
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     case REGISTER:
       return (dispatch) => {

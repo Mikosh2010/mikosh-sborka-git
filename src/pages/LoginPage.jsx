@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { login, setRememberMe } from '../actions/authActions';
 import './UI/LoginPage.css';
 
-const LoginForm = ({ isLoggedIn, login, rememberMe, error }) => {
+const LoginForm = ({ isLoggedIn, login, rememberMe, error, isLoading }) => {
   useEffect(() => {
     const sr = ScrollReveal();
 
@@ -55,22 +55,19 @@ const LoginForm = ({ isLoggedIn, login, rememberMe, error }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [attr, setAttr] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      setIsLoading(true);
-  
+
       try {
         await login(username, password);
       } catch (error) {
         console.log(error);
       }
-  
-      setIsLoading(false);
+
     },
     [username, password, login]
   );
@@ -169,6 +166,7 @@ const mapStateToProps = (state) => ({
   username: state.auth.username,
   rememberMe: state.auth.rememberMe,
   error: state.auth.error,
+  isLoading: state.auth.isLoading
 });
 
 const mapDispatchToProps = {

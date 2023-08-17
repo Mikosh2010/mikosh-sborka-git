@@ -4,6 +4,11 @@ const API_BASE_URL = 'http://localhost:8080/api/auth';
 
 export const login = (username, password) => {
   return (dispatch) => {
+    dispatch({
+      type: 'SET_LOADING', // Добавьте действие для установки isLoading в true
+      payload: true,
+    });
+
     axios
       .post(`${API_BASE_URL}/signin`, {
         username,
@@ -35,6 +40,12 @@ export const login = (username, password) => {
           },
         });
         console.log(error);
+      })
+      .finally(() => {
+        dispatch({
+          type: 'SET_LOADING', // Добавьте действие для установки isLoading в false
+          payload: false,
+        });
       });
   };
 };
