@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ScrollReveal from 'scrollreveal';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link, Navigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { register } from '../actions/authActions'
@@ -110,15 +110,7 @@ const RegisterPage = ({ isLoggedIn }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
         >
-            <AnimatePresence>
-                {showConfirmModal && (
-                    <ConfirmModal
-                        isEmailConfirmed={showConfirmModal}
-                        // You can also add exit animations here if needed
-                        exit={{ opacity: 0 }}
-                    />
-                )}
-            </AnimatePresence>
+                {showConfirmModal && <ConfirmModal isEmailConfirmed={showConfirmModal}/>}
 
 
             {isLoggedIn ? (
