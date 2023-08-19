@@ -8,7 +8,7 @@ import RegisterImage from '../img/register-image.jpg';
 import './UI/RegisterPage.css';
 import ConfirmModal from '../components/ConfirmModal';
 
-const RegisterPage = ({ isLoggedIn, isEmailConfirmed, errorModal, register, confirmEmail }) => {
+const RegisterPage = ({ isLoggedIn, register, confirmEmail }) => {
     useEffect(() => {
         const sr = ScrollReveal();
 
