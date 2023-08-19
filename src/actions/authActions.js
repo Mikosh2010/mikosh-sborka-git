@@ -4,11 +4,6 @@ const API_BASE_URL = 'http://localhost:8080/api/auth';
 
 export const login = (username, password) => {
   return (dispatch) => {
-    dispatch({
-      type: 'SET_LOADING', // Добавьте действие для установки isLoading в true
-      payload: true,
-    });
-
     axios
       .post(`${API_BASE_URL}/signin`, {
         username,
@@ -40,15 +35,11 @@ export const login = (username, password) => {
           },
         });
         console.log(error);
-      })
-      .finally(() => {
-        dispatch({
-          type: 'SET_LOADING', // Добавьте действие для установки isLoading в false
-          payload: false,
-        });
       });
   };
 };
+
+// authActions.js
 
 export const register = (username, email, password) => {
   return async (dispatch) => {
@@ -60,110 +51,84 @@ export const register = (username, email, password) => {
       });
 
       if (response.status === 200) {
-        // Dispatching action directly
         dispatch({
           type: 'REGISTER_SUCCESS',
           payload: {
             username: response.data.username,
-            email: email,
+            email,
           },
         });
 
-        // Устанавливаем флаг успешного подтверждения email
-        dispatch(setEmailConfirmed(true));
-
-        // Выполняем вход в аккаунт
-        dispatch({
-          type: 'LOGIN',
-          payload: {
-            username: response.data.username,
-            loggedIn: true,
-          },
-        });
-
-        // Возвращаем успешный response для обработки
-        return response;
+        dispatch(confirmEmail(email));
       } else {
-        // Dispatching action directly
+        // Dispatch a plain action to handle registration failure
         dispatch({
           type: 'REGISTER_FAILURE',
           payload: {
-            errorModal: {
-              active: true,
-              text: 'Ошибка при регистрации. Покажите этот код администрации: ' + response.status,
-            },
+            error: 'Ошибка при регистрации. Пожалуйста, попробуйте еще раз.',
           },
         });
-
-        // Возвращаем response для обработки ошибки
-        return response;
       }
     } catch (error) {
-      // Dispatching action directly
+      // Dispatch a plain action to handle registration error
       dispatch({
         type: 'REGISTER_FAILURE',
         payload: {
-          errorModal: {
-            active: true,
-            text: `
-            Ошибка при регистрации. Покажите эту ошибку администрации: 
-            
-            ${error}!
-
-            Также, если вы с компьютера, желательно нажать F12 и в вылезающем окне открыть Console (или Консоль), и также показать его администрации.
-            `,
-          },
+          error: 'Ошибка при регистрации. Пожалуйста, попробуйте еще раз.',
         },
       });
 
-      // Возвращаем ошибку для обработки
       throw error;
     }
   };
 };
 
-
-
-export const setEmailConfirmed = (value) => {
-  return {
-    type: 'SET_EMAIL_CONFIRMED',
-    payload: value,
-  };
-};
-
-export const checkEmailConfirmation = (email) => {
-  return async (dispatch, getState) => {
+export const confirmEmail = (email) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/isConfirmed?email=${email}`);
-      if (response.data.confirmed) {
-        dispatch(setEmailConfirmed(true));
+      const response = await axios.post(`${API_BASE_URL}/isConfirmed?email=${email}`, {
+        email,
+      });
+
+      if (response.status === 200 && response.data.confirmed) {
+        // Dispatch a plain action to handle successful email confirmation
         dispatch({
-          type: 'LOGIN',
-          payload: {
-            username: getState().auth.username,
-            loggedIn: true,
-          },
+          type: 'EMAIL_CONFIRMED',
         });
-      } else {
-        dispatch(setEmailConfirmed(false));
+
+        // Also, dispatch an action to show the confirm modal
+        dispatch(showConfirmModal());
       }
     } catch (error) {
+      // Dispatch a plain action to handle email confirmation error
       dispatch({
-        type: 'LOGIN_FAILURE',
+        type: 'EMAIL_CONFIRMATION_FAILURE',
         payload: {
-          error: 'Error checking user confirmation.',
+          error: 'Ошибка при отправке запроса на подтверждение Email. Пожалуйста, попробуйте еще раз.',
         },
       });
     }
   };
 };
 
-export const hideErrorModal = () => {
+
+
+export const showConfirmModal = () => {
   return {
-    type: 'HIDE_ERROR_MODAL',
+    type: 'SHOW_CONFIRM_MODAL',
+    payload: {
+      errorModal: {
+        text: 'Вы успешно зарегистрировались! Пожалуйста, проверьте свою почту для подтверждения Email.',
+      },
+    },
   };
 };
 
+export const hideConfirmModal = () => {
+  return {
+    type: 'HIDE_CONFIRM_MODAL',
+  };
+};
 
 export const logout = () => {
   return {

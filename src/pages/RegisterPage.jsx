@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ScrollReveal from 'scrollreveal';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link, Navigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
-import { register } from '../actions/authActions'
+import { register, confirmEmail } from '../actions/authActions';
 import RegisterImage from '../img/register-image.jpg';
 import './UI/RegisterPage.css';
 import ConfirmModal from '../components/ConfirmModal';
 
-const RegisterPage = ({ isLoggedIn }) => {
+const RegisterPage = ({ isLoggedIn, isEmailConfirmed, errorModal, register, confirmEmail }) => {
     useEffect(() => {
         const sr = ScrollReveal();
 
@@ -55,8 +55,6 @@ const RegisterPage = ({ isLoggedIn }) => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const [showConfirmModal, setShowConfirmModal] = useState(false);
-
     const emailValid = (value) => {
         setEmailValid(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value));
     };
@@ -76,6 +74,7 @@ const RegisterPage = ({ isLoggedIn }) => {
     const handleSubmit = useCallback(
         async (e) => {
             e.preventDefault();
+    
             if (!isEmailValid || !isNameValid || !isPasswordValid || !isRepeatValid) {
                 return;
             }
@@ -83,25 +82,24 @@ const RegisterPage = ({ isLoggedIn }) => {
             setIsLoading(true);
     
             try {
+                // Dispatching the action creator as before
                 const response = await dispatch(register(username, email, password));
     
-                if (response.error) {
-                    // Пришла ошибка с сервера
-                    setRegistrationError("Такой email уже существует.");
-                } else {
-                    // Успешная регистрация
-                    setShowConfirmModal(true);
+                if (response.status === 200 && response.data.confirmed) {
+                    // Register successful, send email confirmation request
+                    dispatch(confirmEmail(email));
                 }
             } catch (error) {
-                console.error("Произошла ошибка:", error);
-                setRegistrationError("Такой email уже существует.");
+                console.error('Произошла ошибка:', error);
+                setRegistrationError('Произошла ошибка при регистрации.');
             } finally {
                 setIsLoading(false);
             }
         },
-        [isEmailValid, isNameValid, isPasswordValid, isRepeatValid, username, password, email, dispatch]
+        [isEmailValid, isNameValid, isPasswordValid, isRepeatValid, username, password, email, dispatch, confirmEmail, register]
     );
     
+
 
     return (
         <motion.div
@@ -110,15 +108,7 @@ const RegisterPage = ({ isLoggedIn }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
         >
-            <AnimatePresence>
-                {showConfirmModal && (
-                    <ConfirmModal
-                        isEmailConfirmed={showConfirmModal}
-                        // You can also add exit animations here if needed
-                        exit={{ opacity: 0 }}
-                    />
-                )}
-            </AnimatePresence>
+            <ConfirmModal />
 
 
             {isLoggedIn ? (
@@ -135,7 +125,7 @@ const RegisterPage = ({ isLoggedIn }) => {
                                 <h3 className="register__title">Создать аккаунт</h3>
                                 <h3 className="register__subtitle">Создайте свой первый аккаунт</h3>
                             </div>
-                            {registrationError && <p className="error-message email-repeat">{registrationError}</p>}    
+                            {registrationError && <p className="error-message email-repeat">{registrationError}</p>}
                             <div className="register__inputs">
                                 <div className="input__box register__input-box">
                                     <input
@@ -215,10 +205,13 @@ const RegisterPage = ({ isLoggedIn }) => {
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn,
+    isEmailConfirmed: state.auth.isEmailConfirmed,
+    errorModal: state.auth.errorModal, // Add this line
 });
 
 const mapDispatchToProps = {
     register,
+    confirmEmail, // Add this line
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

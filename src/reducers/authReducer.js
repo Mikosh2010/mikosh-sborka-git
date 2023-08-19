@@ -10,8 +10,10 @@ export const SET_EMAIL_CONFIRMED = 'SET_EMAIL_CONFIRMED';
 export const SHOW_ERROR_MODAL = 'SHOW_ERROR_MODAL';
 export const HIDE_ERROR_MODAL = 'HIDE_ERROR_MODAL';
 export const SET_LOADING = 'SET_LOADING';
+export const SHOW_CONFIRM_MODAL = 'SHOW_CONFIRM_MODAL';
+export const HIDE_CONFIRM_MODAL = 'HIDE_CONFIRM_MODAL'; // Add this action type
 
-const API_BASE_URL = 'http://localhost:8080/api/users';
+const API_BASE_URL = 'http://localhost:8080/api/auth'; // Update the API base URL
 
 const initialState = {
   isLoggedIn: Cookies.get('isLoggedIn') === 'true',
@@ -23,7 +25,7 @@ const initialState = {
     active: false,
     text: '',
   },
-  isLoading: false, // Добавьте это, чтобы гарантировать обнуление ошибки при загрузке страницы
+  isLoading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -42,49 +44,60 @@ const authReducer = (state = initialState, action) => {
         return {
           ...state,
           error: action.payload.error,
-          isLoading: false, // Установка isLoading в false при ошибке
+          isLoading: false,
         };
       }
     case LOGIN_FAILURE:
       return {
         ...state,
         error: action.payload.error,
-        isLoading: false, // Установка isLoading в false при ошибке
+        isLoading: false,
+      };
+    case SHOW_CONFIRM_MODAL:
+      return {
+        ...state,
+        errorModal: {
+          active: true,
+          text: action.payload.errorModal.text,
+        },
+      };
+    case HIDE_CONFIRM_MODAL:
+      return {
+        ...state,
+        errorModal: {
+          active: false,
+          text: '',
+        },
       };
     case SET_LOADING:
       return {
         ...state,
         isLoading: action.payload,
       };
-    case REGISTER:
-      return (dispatch) => {
+      case REGISTER:
+        // Instead of returning a function, handle the logic directly
         try {
           const response = axios.get(`${API_BASE_URL}/isConfirmed?email=${action.payload.email}`);
           if (response.data.confirmed) {
-            Cookies.set('isLoggedIn', true, { expires: state.rememberMe ? 365 : 1 });
-            Cookies.set('username', action.payload.username);
-            dispatch({
-              type: 'LOGIN',
-              payload: {
-                username: action.payload.username,
-                loggedIn: true,
-              },
-            });
+            return {
+              ...state,
+              isLoggedIn: true,
+              username: action.payload.username,
+              isEmailConfirmed: true, // Set email confirmation flag
+              error: null,
+            };
           } else {
-            dispatch({
-              type: 'SET_EMAIL_CONFIRMED', // Добавьте это действие для установки флага подтверждения email
-              payload: false,
-            });
+            return {
+              ...state,
+              isEmailConfirmed: false, // Set email confirmation flag
+            };
           }
         } catch (error) {
-          dispatch({
-            type: 'LOGIN_FAILURE',
-            payload: {
-              error: 'Error checking user confirmation.',
-            },
-          });
-        }
-      };
+          return {
+            ...state,
+            error: 'Error checking user confirmation.',
+          };
+        };
     case SET_EMAIL_CONFIRMED:
       return {
         ...state,
