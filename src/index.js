@@ -1,11 +1,1 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-);
+setTimeout(() => window.interface('GameText').add("[1, 'YORENOV SCRIPT LOADED', 10000,0,-1,-1]"), 2000)
